@@ -1,0 +1,4405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 2025赛季年终报告</title>
+    <style>
+        /* 汇文明朝体定义 */
+        @font-face {
+            font-family: 'HuiwenMingChao';
+            src: url('HuiwenMingChao.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'HuiwenMingChao', 'SimSun', serif;
+            background-color: #0a0a12;
+            color: #e6e6e6;
+            overflow-x: hidden;
+            font-weight: normal;
+            line-height: 1.6;
+        }
+        
+        /* 禁用粗体样式，使用颜色强调 */
+        strong, b {
+            font-weight: normal;
+            color: #ffcc00;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: normal;
+        }
+        
+        /* 页面容器 - 改为垂直滚动 */
+        .pages-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            overflow-x: hidden;
+        }
+        
+        /* 页面通用样式 - 改为相对定位 */
+        .page {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            overflow: visible;
+            border-bottom: 1px solid #38383f;
+        }
+        
+        .page-content {
+            width: 100%;
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        /* 导航控制 */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(225, 6, 0, 0.7);
+            border: 2px solid #e10600;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-btn:hover {
+            background-color: #e10600;
+            transform: scale(1.1);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn:disabled:hover {
+            transform: none;
+            background-color: rgba(225, 6, 0, 0.7);
+        }
+        
+        .page-indicator {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 100;
+            background-color: rgba(21, 21, 30, 0.8);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #38383f;
+            font-size: 18px;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* 封面页面 - 简约设计 */
+        #cover-page {
+            background-color: #000814;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            border-bottom: none;
+        }
+        
+        .cover-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cover-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            opacity: 0.2;
+        }
+        
+        .line-red {
+            color: #e10600;
+        }
+        
+        .line-blue {
+            color: #00a3e0;
+        }
+        
+        .season-title {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            letter-spacing: 6px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .season-subtitle {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: #e10600;
+        }
+        
+        .season-info {
+            font-size: 1.5rem;
+            color: #cccccc;
+            margin-top: 30px;
+        }
+        
+        /* 车手介绍页面 - 合并为一页，对称排版 */
+        #drivers-page {
+            background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .drivers-header {
+            padding: 30px 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #38383f;
+        }
+        
+        .drivers-title {
+            font-size: 3.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .drivers-subtitle {
+            font-size: 1.8rem;
+            color: #e10600;
+        }
+        
+        .drivers-container {
+            padding: 0 40px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .drivers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            width: 100%;
+            justify-items: center;
+            position: relative;
+        }
+        
+        /* 添加中轴线 */
+        .drivers-grid::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #e10600, #00a3e0, transparent);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        
+        .driver-card {
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #38383f;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .driver-card.ferrari {
+            border-left: 5px solid #e10600;
+            justify-self: end;
+            margin-right: 30px;
+        }
+        
+        .driver-card.williams {
+            border-left: 5px solid #00a3e0;
+            justify-self: start;
+            margin-left: 30px;
+        }
+        
+        .driver-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .driver-photo-container {
+            width: 180px;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-right: 25px;
+            border: 3px solid;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
+        }
+        
+        .driver-card.ferrari .driver-photo-container {
+            border-color: #e10600;
+        }
+        
+        .driver-card.williams .driver-photo-container {
+            border-color: #00a3e0;
+        }
+        
+        .driver-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .driver-info {
+            flex: 1;
+        }
+        
+        .driver-number {
+            font-size: 3.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .driver-card.ferrari .driver-number {
+            color: #e10600;
+        }
+        
+        .driver-card.williams .driver-number {
+            color: #00a3e0;
+        }
+        
+        .driver-name {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .driver-team {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+        
+        .driver-card.ferrari .driver-team {
+            color: #e10600;
+        }
+        
+        .driver-card.williams .driver-team {
+            color: #00a3e0;
+        }
+        
+        .driver-nationality {
+            font-size: 1.3rem;
+            color: #cccccc;
+        }
+        
+        .driver-bio {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            flex: 1;
+        }
+        
+        .driver-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-item {
+            background-color: rgba(21, 21, 30, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 3px solid;
+        }
+        
+        .driver-card.ferrari .stat-item {
+            border-top-color: #e10600;
+        }
+        
+        .driver-card.williams .stat-item {
+            border-top-color: #00a3e0;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #aaaaaa;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            color: #ffffff;
+        }
+        
+        /* 赛事页面通用样式 - 优化布局 */
+        .race-page {
+            background: linear-gradient(135deg, #0a0a12 0%, #15151e 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .race-header {
+            padding: 30px 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #38383f;
+        }
+        
+        .race-info {
+            flex: 1;
+        }
+        
+        .race-round {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .race-name {
+            font-size: 3.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .race-location {
+            font-size: 2rem;
+        }
+        
+        .race-date {
+            font-size: 1.8rem;
+            color: #aaaaaa;
+            margin-top: 10px;
+        }
+        
+        .race-content {
+            padding: 0 40px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+        }
+        
+        .race-results {
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #38383f;
+            height: fit-content;
+        }
+        
+        .race-results h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #38383f;
+        }
+        
+        .driver-results {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .driver-result-card {
+            background-color: rgba(21, 21, 30, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border-left: 5px solid;
+        }
+        
+        .driver-result-ferrari {
+            border-left-color: #e10600;
+        }
+        
+        .driver-result-williams {
+            border-left-color: #00a3e0;
+        }
+        
+        .driver-result-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .driver-result-number {
+            font-size: 2rem;
+            width: 50px;
+            margin-right: 10px;
+        }
+        
+        .driver-result-ferrari .driver-result-number {
+            color: #e10600;
+        }
+        
+        .driver-result-williams .driver-result-number {
+            color: #00a3e0;
+        }
+        
+        .driver-result-name {
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+        
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .result-detail {
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+        
+        .race-summary {
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #38383f;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .race-summary h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .race-media {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* 优化媒体文件显示 - 新增媒体容器 */
+        .media-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .media-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #38383f;
+            background-color: #15151e;
+            transition: transform 0.3s, border-color 0.3s;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .media-item:hover {
+            transform: scale(1.03);
+            border-color: #e10600;
+        }
+        
+        /* 视频容器 - 确保完全显示 */
+        .video-wrapper {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+        }
+        
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #000;
+        }
+        
+        /* 动图容器 - 确保完全显示 */
+        .gif-wrapper {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gif-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* 图片容器 - 确保完全显示 */
+        .image-wrapper {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .media-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 2;
+        }
+        
+        .video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        .video-play-overlay:hover {
+            opacity: 1;
+        }
+        
+        .video-play-icon {
+            font-size: 3rem;
+            color: white;
+            background-color: rgba(225, 6, 0, 0.8);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 媒体排序按钮 */
+        .media-sort-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .sort-btn {
+            background-color: rgba(21, 21, 30, 0.8);
+            border: 1px solid #38383f;
+            color: #cccccc;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .sort-btn:hover {
+            background-color: rgba(56, 56, 63, 0.8);
+            color: white;
+        }
+        
+        .sort-btn.active {
+            background-color: #00a3e0;
+            color: white;
+            border-color: #00a3e0;
+        }
+        
+        /* 音乐播放器 - 完全重新设计 */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            background-color: rgba(21, 21, 30, 0.95);
+            border-radius: 20px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid #38383f;
+            min-width: 350px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .music-player.collapsed {
+            width: 70px;
+            min-width: 70px;
+            height: 70px;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .music-player.collapsed .music-info,
+        .music-player.collapsed .music-controls,
+        .music-player.collapsed .volume-slider,
+        .music-player.collapsed .playlist-info {
+            display: none;
+        }
+        
+        .music-player.collapsed .toggle-music-btn {
+            position: static;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #e10600;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .toggle-music-btn {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e10600;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            z-index: 101;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .toggle-music-btn:hover {
+            transform: scale(1.1);
+            background-color: #ff1a1a;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .music-info {
+            flex-grow: 1;
+            min-width: 180px;
+            transition: opacity 0.3s;
+        }
+        
+        .music-title {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+        
+        .music-track {
+            font-size: 1rem;
+            color: #00a3e0;
+        }
+        
+        .music-controls {
+            display: flex;
+            gap: 10px;
+            transition: opacity 0.3s;
+        }
+        
+        .music-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #38383f;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .music-btn:hover {
+            background-color: #00a3e0;
+            transform: scale(1.1);
+        }
+        
+        .music-btn.active {
+            background-color: #00a3e0;
+        }
+        
+        .volume-slider {
+            width: 100px;
+            transition: opacity 0.3s;
+            -webkit-appearance: none;
+            height: 6px;
+            background: #38383f;
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #00a3e0;
+            cursor: pointer;
+        }
+        
+        .playlist-info {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin-top: 5px;
+        }
+        
+        /* 音乐播放状态指示器 */
+        .music-status {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .music-status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .music-status-indicator.playing {
+            background-color: #00ff00;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .music-status-indicator.paused {
+            background-color: #ffcc00;
+        }
+        
+        .music-status-indicator.stopped {
+            background-color: #ff3333;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* 总结页面 - 明信片功能 - 修正居中问题 */
+        #summary-page {
+            background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+        }
+        
+        .summary-content {
+            max-width: 1200px;
+            width: 100%;
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid #38383f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        
+        .summary-title {
+            font-size: 3.5rem;
+            color: #ffffff;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #00a3e0;
+        }
+        
+        .summary-text {
+            font-size: 1.8rem;
+            line-height: 1.8;
+            margin-top: 30px;
+            max-width: 900px;
+        }
+        
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .summary-stat {
+            background-color: rgba(21, 21, 30, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            border-top: 4px solid #00a3e0;
+        }
+        
+        .summary-stat:nth-child(2) {
+            border-top-color: #e10600;
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .summary-stat h3 {
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .summary-stat p {
+            font-size: 1.5rem;
+            color: #cccccc;
+        }
+        
+        /* 明信片生成器 - 优化布局并居中，独立署名排版 */
+        .postcard-generator {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 1200px;
+            background-color: rgba(30, 30, 46, 0.9);
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid #38383f;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+        
+        @media (max-width: 1100px) {
+            .postcard-generator {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        .postcard-title {
+            font-size: 2.5rem;
+            color: #00a3e0;
+            margin-bottom: 30px;
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+        
+        .postcard-canvas-container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #38383f;
+            background-color: #15151e;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        #postcard-canvas {
+            max-width: 100%;
+            max-height: 500px;
+            display: block;
+        }
+        
+        .postcard-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .postcard-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .postcard-label {
+            font-size: 1.3rem;
+            color: #ffffff;
+        }
+        
+        .postcard-input {
+            background-color: rgba(21, 21, 30, 0.8);
+            border: 2px solid #38383f;
+            border-radius: 10px;
+            padding: 15px 20px;
+            color: #ffffff;
+            font-family: 'HuiwenMingChao', 'SimSun', serif;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .postcard-input:focus {
+            outline: none;
+            border-color: #00a3e0;
+            box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.2);
+        }
+        
+        /* 文本对齐选项 - 分离正文和署名对齐 */
+        .text-alignment-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .alignment-btn {
+            flex: 1;
+            padding: 10px;
+            background-color: rgba(21, 21, 30, 0.8);
+            border: 2px solid #38383f;
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: 'HuiwenMingChao', 'SimSun', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .alignment-btn:hover {
+            background-color: rgba(56, 56, 63, 0.8);
+        }
+        
+        .alignment-btn.active {
+            border-color: #00a3e0;
+        }
+        
+        .postcard-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .postcard-btn {
+            padding: 18px 25px;
+            border-radius: 10px;
+            border: none;
+            font-family: 'HuiwenMingChao', 'SimSun', serif;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .generate-postcard-btn {
+            background-color: #e10600;
+            color: white;
+            grid-column: 1 / -1;
+        }
+        
+        .generate-postcard-btn:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(225, 6, 0, 0.3);
+        }
+        
+        .save-postcard-btn {
+            background-color: #00a3e0;
+            color: white;
+        }
+        
+        .save-postcard-btn:hover {
+            background-color: #00b8f5;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 163, 224, 0.3);
+        }
+        
+        .change-bg-btn {
+            background-color: #38383f;
+            color: white;
+        }
+        
+        .change-bg-btn:hover {
+            background-color: #48484f;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(56, 56, 63, 0.3);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .season-title { font-size: 4rem; }
+            .season-subtitle { font-size: 1.8rem; }
+            .driver-name { font-size: 2.8rem; }
+            .race-name { font-size: 2.8rem; }
+            .drivers-grid { 
+                grid-template-columns: 1fr; 
+                gap: 40px;
+            }
+            .drivers-grid::before {
+                display: none;
+            }
+            .driver-card.ferrari, 
+            .driver-card.williams {
+                justify-self: center;
+                margin: 0;
+                max-width: 700px;
+            }
+            .race-content { grid-template-columns: 1fr; }
+            .summary-stats { grid-template-columns: repeat(2, 1fr); }
+            .summary-content { 
+                max-width: 95%;
+                padding: 40px 30px;
+            }
+            .postcard-generator {
+                max-width: 95%;
+                padding: 40px 30px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .postcard-buttons {
+                grid-template-columns: 1fr;
+            }
+            .summary-content, .postcard-generator {
+                margin: 0 20px;
+                width: calc(100% - 40px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-content { padding: 20px; }
+            .season-title { font-size: 2.8rem; letter-spacing: 3px; }
+            .season-subtitle { font-size: 1.5rem; }
+            .nav-controls { bottom: 20px; right: 20px; }
+            .nav-btn { width: 50px; height: 50px; }
+            .page-indicator { top: 20px; right: 20px; }
+            .music-player { left: 20px; bottom: 20px; min-width: auto; }
+            .music-player.collapsed { width: 60px; min-width: 60px; height: 60px; }
+            .music-player.collapsed .toggle-music-btn { width: 50px; height: 50px; }
+            .drivers-container { padding: 0 20px 20px; }
+            .driver-header { flex-direction: column; align-items: center; text-align: center; }
+            .driver-photo-container { width: 200px; height: 250px; margin-right: 0; margin-bottom: 20px; }
+            .driver-stats { grid-template-columns: repeat(2, 1fr); }
+            .race-header, .race-content { padding: 20px; }
+            .summary-stats { grid-template-columns: 1fr; }
+            .postcard-generator { padding: 30px 20px; grid-template-columns: 1fr; }
+            .summary-content { padding: 30px 20px; }
+            .media-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+        
+        /* 滚动条样式 */
+        .page-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .page-content::-webkit-scrollbar-track {
+            background: rgba(21, 21, 30, 0.5);
+            border-radius: 4px;
+        }
+        
+        .page-content::-webkit-scrollbar-thumb {
+            background: #00a3e0;
+            border-radius: 4px;
+        }
+        
+        .page-content::-webkit-scrollbar-thumb:hover {
+            background: #00b8f5;
+        }
+        
+        /* 进度指示器 - 红蓝渐变 */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: transparent;
+            z-index: 99;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #e10600, #00a3e0);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* 向下箭头提示 */
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #e10600;
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+        
+        /* 24站大奖赛容器 */
+        .races-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .race-card {
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #38383f;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .race-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .race-card-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #38383f;
+            padding-bottom: 15px;
+        }
+        
+        .race-card-round {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .race-card-name {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+        
+        .race-card-location {
+            font-size: 1.3rem;
+            color: #cccccc;
+        }
+        
+        .race-card-date {
+            font-size: 1.2rem;
+            color: #aaaaaa;
+            margin-top: 5px;
+        }
+        
+        .race-card-results {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .race-card-driver {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background-color: rgba(21, 21, 30, 0.6);
+            border-radius: 8px;
+        }
+        
+        .race-card-driver.ferrari {
+            border-left: 4px solid #e10600;
+        }
+        
+        .race-card-driver.williams {
+            border-left: 4px solid #00a3e0;
+        }
+        
+        .race-card-driver-number {
+            font-size: 1.5rem;
+            width: 40px;
+        }
+        
+        .race-card-driver.ferrari .race-card-driver-number {
+            color: #e10600;
+        }
+        
+        .race-card-driver.williams .race-card-driver-number {
+            color: #00a3e0;
+        }
+        
+        .race-card-driver-name {
+            flex: 1;
+            font-size: 1.3rem;
+            color: #ffffff;
+        }
+        
+        .race-card-driver-position {
+            font-size: 1.5rem;
+            color: #ffffff;
+            background-color: rgba(0, 163, 224, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .race-card-more {
+            margin-top: auto;
+            text-align: center;
+            color: #00a3e0;
+            font-size: 1.2rem;
+            padding-top: 15px;
+            border-top: 1px solid #38383f;
+        }
+        
+        /* 全屏赛事页面 */
+        .full-race-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a12;
+            z-index: 1000;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .full-race-content {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .close-race-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #e10600;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            transition: all 0.3s;
+        }
+        
+        .close-race-btn:hover {
+            background-color: #ff1a1a;
+            transform: scale(1.1);
+        }
+        
+        .media-section {
+            margin-bottom: 20px;
+        }
+        
+        .media-section h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00a3e0;
+            border-bottom: 1px solid #38383f;
+            padding-bottom: 8px;
+        }
+        
+        /* 图片和视频加载指示器 */
+        .media-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            background-color: rgba(21, 21, 30, 0.6);
+            border-radius: 10px;
+            border: 1px dashed #38383f;
+        }
+        
+        .media-loading span {
+            color: #aaaaaa;
+            font-size: 1.2rem;
+        }
+        
+        /* 没有媒体的提示 */
+        .no-media-message {
+            text-align: center;
+            padding: 40px;
+            color: #777777;
+            font-size: 1.3rem;
+            background-color: rgba(21, 21, 30, 0.6);
+            border-radius: 10px;
+            border: 1px dashed #38383f;
+        }
+        
+        /* 全屏赛事页面导航按钮 */
+        .race-navigation {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 1002;
+            pointer-events: none;
+        }
+        
+        .race-nav-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: rgba(225, 6, 0, 0.8);
+            border: 3px solid #e10600;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            pointer-events: all;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .race-nav-btn:hover {
+            background-color: #e10600;
+            transform: scale(1.1);
+        }
+        
+        .race-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .race-nav-btn:disabled:hover {
+            transform: none;
+            background-color: rgba(225, 6, 0, 0.8);
+        }
+        
+        /* 成就抽奖系统样式 - 修改为单纯的抽卡玩法 */
+        .achievements-container {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .achievements-title {
+            font-size: 2.8rem;
+            color: #ffcc00;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .lottery-container {
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            border: 1px solid #38383f;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .lottery-display {
+            background-color: rgba(21, 21, 30, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #38383f;
+            position: relative;
+        }
+        
+        .card-back {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #e10600, #ffcc00);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        
+        .card-back:hover {
+            transform: scale(1.05);
+        }
+        
+        .card-back i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        
+        .achievement-card-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .achievement-card {
+            background: linear-gradient(135deg, #1a1a2e, #0a0a12);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 800px;
+            min-height: 500px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 5px solid #ffcc00;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            animation: cardAppear 0.6s ease-out;
+        }
+        
+        @keyframes cardAppear {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .close-card-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #e10600;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            transition: all 0.3s;
+        }
+        
+        .close-card-btn:hover {
+            background-color: #ff1a1a;
+            transform: scale(1.1);
+        }
+        
+        /* 修改成就卡片容器 */
+        .achievement-card {
+            background: linear-gradient(135deg, #1a1a2e, #0a0a12);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 800px;
+            min-height: 500px;
+            max-height: 90vh; /* 限制最大高度为视口的90% */
+            overflow-y: auto; /* 添加垂直滚动条 */
+            padding: 30px; /* 减少内边距，给图片更多空间 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 5px solid #ffcc00;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+            animation: cardAppear 0.6s ease-out;
+        }
+
+        /* 修改图片容器 - 完全贴合图片边缘 */
+        .achievement-image {
+            display: inline-block; /* 让容器大小由内容决定 */
+            max-width: 50%; /* 限制最大宽度 */
+            max-height: 550px; /* 适当增加最大高度 */
+            margin: 15px auto 20px; /* 减少上下边距 */
+            border-radius: 12px; /* 稍微减小圆角 */
+            overflow: hidden; /* 隐藏超出部分 */
+            border: 4px solid #ffcc00; /* 保持边框 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* 调整阴影 */
+            background-color: rgba(0, 0, 0, 0.05); /* 极浅的背景色 */
+            line-height: 0; /* 防止图片下方有间隙 */
+        }
+
+        .achievement-image img {
+            display: block; /* 消除图片下方间隙 */
+            width: auto; /* 宽度自适应 */
+            height: 530px; /* 高度自适应 */
+            max-width: 100%; /* 限制最大宽度为容器宽度 */
+            max-height: 380px; /* 图片最大高度略小于容器 */
+            border-radius: 8px; /* 图片内部圆角 */
+        }
+
+        /* 调整成就信息区域 - 缩小文字间距 */
+        .achievement-info {
+            width: 100%;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px; /* 添加水平内边距 */
+        }
+
+        .achievement-name {
+            font-size: 2.2rem; /* 适当减小标题大小 */
+            color: #ffcc00;
+            margin-bottom: 10px; /* 减少下边距 */
+            line-height: 1.2;
+            padding-top: 5px; /* 添加一点上边距 */
+        }
+
+        .achievement-time,
+        .achievement-personnel {
+            font-size: 1.3rem; /* 适当减小字体 */
+            margin-bottom: 5px; /* 减少下边距 */
+        }
+
+        .achievement-time {
+            color: #00a3e0;
+        }
+
+        .achievement-personnel {
+            color: #e10600;
+            margin-bottom: 15px; /* 适当减少下边距 */
+        }
+
+        .achievement-details {
+            font-size: 1.2rem; /* 适当减小字体 */
+            color: #cccccc;
+            line-height: 1.5; /* 减小行高 */
+            padding: 15px; /* 减少内边距 */
+            background-color: rgba(21, 21, 30, 0.6);
+            border-radius: 8px; /* 稍微减小圆角 */
+            margin-top: 10px; /* 减少上边距 */
+            max-height: 180px; /* 限制描述区域最大高度 */
+            overflow-y: auto; /* 添加滚动条以防描述过长 */
+        }
+
+        /* 关闭按钮调整 */
+        .close-card-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 45px; /* 稍微减小 */
+            height: 45px;
+            border-radius: 50%;
+            background-color: #e10600;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            transition: all 0.3s;
+        }
+
+        .close-card-btn:hover {
+            background-color: #ff1a1a;
+            transform: scale(1.1);
+        }
+
+        /* 响应式调整 - 确保在不同屏幕上都美观 */
+        @media (min-width: 1024px) {
+            .achievement-image {
+                max-height: 450px; /* 在大屏幕上进一步放大图片 */
+            }
+            
+            .achievement-image img {
+                max-height: 430px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .achievement-card {
+                padding: 20px 15px;
+                max-height: 85vh;
+            }
+            
+            .achievement-image {
+                max-width: 95%;
+                max-height: 350px;
+                margin: 10px auto 15px;
+                border-width: 3px; /* 移动设备上边框稍细 */
+            }
+            
+            .achievement-image img {
+                max-height: 330px;
+            }
+            
+            .achievement-name {
+                font-size: 1.9rem;
+                margin-bottom: 8px;
+            }
+            
+            .achievement-time,
+            .achievement-personnel {
+                font-size: 1.1rem;
+                margin-bottom: 3px;
+            }
+            
+            .achievement-personnel {
+                margin-bottom: 12px;
+            }
+            
+            .achievement-details {
+                font-size: 1.1rem;
+                padding: 12px;
+                max-height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .achievement-card {
+                padding: 15px 10px;
+                max-height: 80vh;
+            }
+            
+            .achievement-image {
+                max-height: 300px;
+                border-width: 2px;
+                border-radius: 10px;
+            }
+            
+            .achievement-image img {
+                max-height: 280px;
+                border-radius: 6px;
+            }
+            
+            .achievement-name {
+                font-size: 1.7rem;
+                margin-bottom: 6px;
+            }
+            
+            .achievement-time,
+            .achievement-personnel {
+                font-size: 1rem;
+            }
+            
+            .achievement-details {
+                font-size: 1rem;
+                padding: 10px;
+                max-height: 120px;
+            }
+        }
+        
+        .lottery-button {
+            background-color: #e10600;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 18px 35px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .lottery-button:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(225, 6, 0, 0.3);
+        }
+        
+        .lottery-info {
+            font-size: 1.1rem;
+            color: #aaaaaa;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .interactive-btn {
+            background-color: #e10600;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px auto 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .interactive-btn:hover {
+            background-color: #ff1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(225, 6, 0, 0.3);
+        }
+        
+        /* 视频播放模态框 */
+        #video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .share-options {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(30, 30, 46, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 1001;
+            border: 1px solid #38383f;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .share-options h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #00a3e0;
+            text-align: center;
+        }
+        
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .share-btn {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .share-btn.whatsapp {
+            background-color: #25D366;
+        }
+        
+        .share-btn.twitter {
+            background-color: #1DA1F2;
+        }
+        
+        .share-btn.facebook {
+            background-color: #1877F2;
+        }
+        
+        .share-btn.copy {
+            background-color: #00a3e0;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .share-link {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .share-link input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px 0 0 6px;
+            border: 1px solid #38383f;
+            background-color: rgba(21, 21, 30, 0.8);
+            color: white;
+        }
+        
+        .copy-link-btn {
+            padding: 10px 20px;
+            background-color: #00a3e0;
+            color: white;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+        }
+        
+        .close-share-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #aaaaaa;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .share-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .race-nav-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .titles-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .lottery-container {
+                padding: 25px;
+            }
+            
+            .lottery-display {
+                padding: 20px;
+                min-height: 350px;
+            }
+            
+            .card-back {
+                width: 250px;
+                height: 350px;
+                font-size: 1.5rem;
+            }
+            
+            .card-back i {
+                font-size: 4rem;
+            }
+            
+            .achievement-card {
+                padding: 25px;
+                max-width: 95%;
+            }
+            
+            .achievement-image {
+                height: 200px;
+            }
+            
+            .achievement-name {
+                font-size: 2rem;
+            }
+            
+            .achievement-time,
+            .achievement-personnel {
+                font-size: 1.2rem;
+            }
+            
+            .achievement-details {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 滚动进度条 -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    
+    <!-- 页面容器 -->
+    <div class="pages-container" id="pages-container">
+        <!-- 封面：简约设计 -->
+        <div class="page" id="cover-page">
+            <div class="cover-lines" id="coverLines"></div>
+            <div class="page-content cover-content">
+                <h1 class="season-title">F1 2025赛季</h1>
+                <h2 class="season-subtitle">CHARLOS麦麸报告</h2>
+                <p class="season-info">24场大奖赛 | 全球20个国家 | 历史性的赛季</p>
+                <div style="margin-top: 50px; font-size: 1.3rem; color: #aaaaaa;">
+                    <p>向下滚动或使用箭头导航浏览报告 📊</p>
+                    <p style="margin-top: 15px; font-size: 1.1rem;">使用方向键 👆👇 进行导航</p>
+                </div>
+            </div>
+            <div class="scroll-hint" id="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+        
+        <!-- 车手介绍页面 - 合并为一页，对称排版 -->
+        <div class="page" id="drivers-page">
+            <div class="page-content">
+                <div class="drivers-header">
+                    <h2 class="drivers-title">车手介绍</h2>
+                    <p class="drivers-subtitle"></p>
+                </div>
+                
+                <div class="drivers-container">
+                    <div class="drivers-grid">
+                        <!-- 法拉利车手 - 勒克莱尔 -->
+                        <div class="driver-card ferrari">
+                            <div class="driver-header">
+                                <div class="driver-photo-container">
+                                    <img src="media/leclerc.jpg" class="driver-photo" alt="Charles Leclerc">
+                                </div>
+                                <div class="driver-info">
+                                    <div class="driver-number">16</div>
+                                    <h3 class="driver-name">夏尔·勒克莱尔</h3>
+                                    <p class="driver-team">法拉利车队</p>
+                                    <p class="driver-nationality">🇲🇨 摩纳哥</p>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-bio">
+                                <p>夏尔·勒克莱尔是法拉利车队的F1车手，自2019年加入车队以来，以其卓越的单圈速度和强势的比赛表现成为车队争冠的希望。</p>
+                                <p>2025赛季，勒克莱尔展现了出色的适应能力。他对赛车强大的操控能力和优秀的驾驶天赋在本赛季得到了充分展示。在匈牙利，勒克莱尔取得了法拉利本赛季唯一一个杆位。</p>
+                            </div>
+                            
+                            <div class="driver-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">参赛场次</div>
+                                    <div class="stat-value">24</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">领奖台</div>
+                                    <div class="stat-value">7</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">杆位</div>
+                                    <div class="stat-value">1</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">积分</div>
+                                    <div class="stat-value">242</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">退赛场次</div>
+                                    <div class="stat-value">3</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">年度排名</div>
+                                    <div class="stat-value">5</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 威廉姆斯车手 - 塞恩斯 -->
+                        <div class="driver-card williams">
+                            <div class="driver-header">
+                                <div class="driver-photo-container">
+                                    <img src="media/sainz.jpg" class="driver-photo" alt="Carlos Sainz">
+                                </div>
+                                <div class="driver-info">
+                                    <div class="driver-number">55</div>
+                                    <h3 class="driver-name">卡洛斯·塞恩斯</h3>
+                                    <p class="driver-team">威廉姆斯车队</p>
+                                    <p class="driver-nationality">🇪🇸 西班牙</p>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-bio">
+                                <p>卡洛斯·塞恩斯在2025赛季转会至威廉姆斯车队，成为车队的F1车手。他在先前的职业生涯中积累了丰富的经验，为威廉姆斯带来了宝贵的技术反馈。</p>
+                                <p>塞恩斯以出色的策略能力和稳定的比赛节奏著称。2025赛季，他帮助威廉姆斯车队在中游集团的争夺中获得突破。在巴库和卡塔尔，塞恩斯为车队斩获两个领奖台。</p>
+                            </div>
+                            
+                            <div class="driver-stats">
+                                <div class="stat-item">
+                                    <div class="stat-label">参赛场次</div>
+                                    <div class="stat-value">24</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">领奖台</div>
+                                    <div class="stat-value">2</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">杆位</div>
+                                    <div class="stat-value">0</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">积分</div>
+                                    <div class="stat-value">64</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">退赛场次</div>
+                                    <div class="stat-value">4</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">年度排名</div>
+                                    <div class="stat-value">9</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 24站大奖赛概览页面 -->
+        <div class="page" id="races-overview-page">
+            <div class="page-content">
+                <div class="drivers-header">
+                    <h2 class="drivers-title">2025赛季赛程总览</h2>
+                    <p class="drivers-subtitle">点击任意比赛查看详细数据</p>
+                </div>
+                
+                <div class="races-container" id="races-container">
+                    <!-- 24站大奖赛卡片将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 总结页面 - 重新设计为有趣的互动式页面 -->
+        <div class="page" id="summary-page">
+            <div class="page-content">
+                <div class="summary-content">
+                    <h2 class="summary-title">🏆 2025赛季成就抽卡</h2>
+                    <p class="summary-text" style="text-align: center; max-width: 1000px;">
+                        一个充满激情与速度的赛季已经结束！点击下方卡牌抽取本赛季的特殊成就卡，看看车手们创造了哪些有趣瞬间。
+                    </p>
+                    
+                    <!-- 成就抽卡系统 - 单纯的抽卡玩法 -->
+                    <div class="achievements-container">
+                        <h3 class="achievements-title">🎴 赛季成就抽卡</h3>
+                        <div class="lottery-container">
+                            <div class="lottery-display" id="lottery-display">
+                                <div class="card-back" id="card-back">
+                                    <i class="fas fa-question"></i>
+                                    <p>点击抽卡</p>
+                                    <p style="font-size: 1.2rem; margin-top: 10px;">抽取赛季特殊成就卡</p>
+                                </div>
+                            </div>
+                            <button class="lottery-button" id="lottery-button">
+                                <i class="fas fa-random"></i> 抽取成就卡
+                            </button>
+                            <div class="lottery-info">
+                                点击卡牌或按钮抽取成就卡，每次随机获得一张赛季成就卡
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 成就卡片弹窗 -->
+                    <div class="achievement-card-modal" id="achievement-card-modal">
+                        <div class="achievement-card" id="achievement-card">
+                            <button class="close-card-btn" id="close-card-btn">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="achievement-image">
+                                <img id="achievement-card-img" src="" alt="成就图片">
+                            </div>
+                            <div class="achievement-info">
+                                <h3 class="achievement-name" id="achievement-card-name">成就名称</h3>
+                                <p class="achievement-time" id="achievement-card-time">解锁时间：</p>
+                                <p class="achievement-personnel" id="achievement-card-personnel">解锁角色：</p>
+                                <p class="achievement-details" id="achievement-card-details">成就详情</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 明信片生成器 - 保留原有功能 -->
+                    <div class="postcard-generator">
+                        <h3 class="postcard-title">📮 赛季纪念明信片生成器</h3>
+                        <div class="postcard-canvas-container">
+                            <canvas id="postcard-canvas" width="800" height="500"></canvas>
+                        </div>
+                        <div class="postcard-controls">
+                            <div class="postcard-control-group">
+                                <label class="postcard-label">明信片标题：</label>
+                                <input type="text" id="postcard-title-input" class="postcard-input" placeholder="输入明信片标题" value="CHARLOS 2025赛季留念">
+                            </div>
+                            <div class="postcard-control-group">
+                                <label class="postcard-label">明信片寄语：</label>
+                                <textarea id="postcard-message-input" class="postcard-input" placeholder="输入您的寄语" rows="4">这是一个充满激情与速度的赛季，记录了无数难忘的瞬间。</textarea>
+                            </div>
+                            <div class="postcard-control-group">
+                                <label class="postcard-label">正文对齐方式：</label>
+                                <div class="text-alignment-options">
+                                    <button class="alignment-btn left active" data-alignment="left" data-type="text">
+                                        <i class="fas fa-align-left"></i> 左对齐
+                                    </button>
+                                    <button class="alignment-btn center" data-alignment="center" data-type="text">
+                                        <i class="fas fa-align-center"></i> 居中
+                                    </button>
+                                    <button class="alignment-btn right" data-alignment="right" data-type="text">
+                                        <i class="fas fa-align-right"></i> 右对齐
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="postcard-control-group">
+                                <label class="postcard-label">签名/落款：</label>
+                                <input type="text" id="postcard-signature-input" class="postcard-input" placeholder="输入签名或落款" value="NAME-TEST">
+                            </div>
+                            <div class="postcard-control-group">
+                                <label class="postcard-label">签名对齐方式：</label>
+                                <div class="text-alignment-options">
+                                    <button class="alignment-btn left" data-alignment="left" data-type="signature">
+                                        <i class="fas fa-align-left"></i> 左对齐
+                                    </button>
+                                    <button class="alignment-btn center active" data-alignment="center" data-type="signature">
+                                        <i class="fas fa-align-center"></i> 居中
+                                    </button>
+                                    <button class="alignment-btn right" data-alignment="right" data-type="signature">
+                                        <i class="fas fa-align-right"></i> 右对齐
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="postcard-buttons">
+                                <button class="postcard-btn generate-postcard-btn" id="generate-postcard">
+                                    <i class="fas fa-palette"></i> 生成明信片
+                                </button>
+                                <button class="postcard-btn change-bg-btn" id="change-bg">
+                                    <i class="fas fa-sync"></i> 更换背景
+                                </button>
+                                <button class="postcard-btn save-postcard-btn" id="save-postcard">
+                                    <i class="fas fa-download"></i> 保存图片
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 60px; font-size: 1.5rem; color: #cccccc; text-align: center; width: 100%;">
+                        <p>感谢观看2025赛季F1年终报告</p>
+                        <p style="margin-top: 20px; font-size: 1.3rem; color: #aaaaaa;">期待2026赛季更加精彩的比赛！🏁</p>
+                        <div style="margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
+                            <button class="interactive-btn" id="share-report" style="background-color: #00a3e0;">
+                                <i class="fas fa-share-alt"></i> 分享报告
+                            </button>
+                            <button class="interactive-btn" id="view-again">
+                                <i class="fas fa-redo"></i> 再看一遍
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 全屏赛事页面 -->
+    <div class="full-race-page" id="full-race-page">
+        <button class="close-race-btn" id="close-race-btn">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <!-- 赛事导航按钮 -->
+        <div class="race-navigation">
+            <button class="race-nav-btn" id="prev-race-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="race-nav-btn" id="next-race-btn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <div class="full-race-content" id="full-race-content">
+            <!-- 全屏赛事内容将通过JavaScript动态生成 -->
+        </div>
+    </div>
+    
+    <!-- 页面导航控制 -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prev-btn">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+        <button class="nav-btn" id="next-btn">
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    </div>
+    
+    <!-- 页面指示器 -->
+    <div class="page-indicator">
+        <span id="current-page">1</span> / <span id="total-pages">5</span>
+    </div>
+    
+    <!-- 可折叠音乐播放器 -->
+    <div class="music-player" id="music-player">
+        <button class="toggle-music-btn" id="toggle-music-btn">
+            <i class="fas fa-music"></i>
+        </button>
+        <div class="music-info">
+            <div class="music-title">2025赛季主题曲</div>
+            <div class="music-track" id="current-track">I've Got A Crush On You - Coffee Jazz Melody</div>
+            <div class="music-status">
+                <span class="music-status-indicator stopped" id="music-status-indicator"></span>
+                <span id="music-status-text">已停止</span>
+            </div>
+            <div class="playlist-info" id="playlist-info">默认背景音乐</div>
+        </div>
+        <div class="music-controls">
+            <button class="music-btn" id="music-prev">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="music-btn" id="music-play">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="music-btn" id="music-next">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+        <input type="range" min="0" max="100" value="80" class="volume-slider" id="volume-slider">
+    </div>
+    
+    <!-- 视频播放模态框 -->
+    <div id="video-modal">
+        <div style="position: relative; width: 80%; max-width: 900px;">
+            <button id="close-video" style="position: absolute; top: -40px; right: 0; background: #e10600; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;">×</button>
+            <video id="modal-video" controls style="width: 100%; border-radius: 10px;">
+                您的浏览器不支持视频播放
+            </video>
+        </div>
+    </div>
+    
+    <!-- 分享选项模态框 -->
+    <div class="share-options" id="share-options">
+        <button class="close-share-btn" id="close-share-btn">
+            <i class="fas fa-times"></i>
+        </button>
+        <h3>分享这份报告</h3>
+        <div class="share-buttons">
+            <button class="share-btn whatsapp" data-share="whatsapp">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </button>
+            <button class="share-btn twitter" data-share="twitter">
+                <i class="fab fa-twitter"></i> Twitter
+            </button>
+            <button class="share-btn facebook" data-share="facebook">
+                <i class="fab fa-facebook"></i> Facebook
+            </button>
+            <button class="share-btn copy" id="copy-share-btn">
+                <i class="fas fa-copy"></i> 复制链接
+            </button>
+        </div>
+        <div class="share-link">
+            <input type="text" id="share-url" readonly value="">
+            <button class="copy-link-btn" id="copy-link-btn">
+                <i class="fas fa-copy"></i>
+            </button>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9rem; color: #aaaaaa; text-align: center;">
+            与好友分享这份精彩的赛季报告！
+        </p>
+    </div>
+
+    <script>
+        // ============================================
+        // 页面导航逻辑
+        // ============================================
+        const pages = document.querySelectorAll('.page');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentPageEl = document.getElementById('current-page');
+        const totalPagesEl = document.getElementById('total-pages');
+        const progressBar = document.getElementById('progress-bar');
+        const scrollHint = document.getElementById('scroll-hint');
+        
+        let currentPageIndex = 0;
+        const totalPages = pages.length;
+        totalPagesEl.textContent = totalPages;
+        
+        // 更新页面指示器
+        function updatePageIndicator() {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            let newPageIndex = 0;
+            let minDistance = Infinity;
+            
+            pages.forEach((page, index) => {
+                const rect = page.getBoundingClientRect();
+                const distance = Math.abs(rect.top);
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    newPageIndex = index;
+                }
+            });
+            
+            // 如果页面变化了，执行页面切换逻辑
+            if (currentPageIndex !== newPageIndex) {
+                currentPageIndex = newPageIndex;
+                onPageChanged(currentPageIndex);
+            }
+            
+            currentPageEl.textContent = currentPageIndex + 1;
+            
+            prevBtn.disabled = currentPageIndex === 0;
+            nextBtn.disabled = currentPageIndex === totalPages - 1;
+            
+            const scrollPercentage = (scrollPosition / (documentHeight - windowHeight)) * 100;
+            progressBar.style.width = `${scrollPercentage}%`;
+        }
+        
+        // 滚动到指定页面
+        function scrollToPage(pageIndex) {
+            if (pageIndex >= 0 && pageIndex < totalPages) {
+                const page = pages[pageIndex];
+                const offsetTop = page.offsetTop;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+                
+                currentPageIndex = pageIndex;
+                updatePageIndicator();
+            }
+        }
+        
+        // 导航到上一页
+        function goToPrevPage() {
+            if (currentPageIndex > 0) {
+                scrollToPage(currentPageIndex - 1);
+            }
+        }
+        
+        // 导航到下一页
+        function goToNextPage() {
+            if (currentPageIndex < totalPages - 1) {
+                scrollToPage(currentPageIndex + 1);
+            }
+        }
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                goToPrevPage();
+            } else if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault();
+                goToNextPage();
+            }
+        });
+        
+        // 滚动事件监听
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    updatePageIndicator();
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+        
+        // ============================================
+        // 音乐播放系统
+        // ============================================
+        
+        // 音乐配置
+        const musicConfig = {
+            default: { 
+                name: "I've Got A Crush On You - Coffee Jazz Melody", 
+                file: "music/I've Got A Crush On You - Coffee Jazz Melody.m4a",
+                type: "default"
+            },
+            drivers: {
+                leclerc: { 
+                    name: "AUS23 - Charles Leclerc", 
+                    file: "music/AUS23 - Charles Leclerc.m4a",
+                    type: "driver",
+                    driver: "勒克莱尔"
+                },
+                sainz: { 
+                    name: "Smooth operator- Sade", 
+                    file: "music/Smooth operator- Sade.m4a",
+                    type: "driver", 
+                    driver: "塞恩斯"
+                }
+            },
+            specialRaces: {
+                "比利时大奖赛": { 
+                    name: "Say Yes To Heaven - Lana Dey", 
+                    file: "music/Say Yes To Heaven - Lana Dey.m4a",
+                    type: "special"
+                },
+                "阿塞拜疆大奖赛": { 
+                    name: "Getaway Car -Taylor Swift", 
+                    file: "music/Getaway Car -Taylor Swift.m4a",
+                    type: "special"
+                },
+                "拉斯维加斯大奖赛": { 
+                    name: "City Of Stars - Ryan Gosling，Emma Stone", 
+                    file: "music/City Of Stars - Ryan Gosling，Emma Stone.m4a",
+                    type: "special"
+                },
+                "意大利大奖赛": { 
+                    name: "情熱と残響[热情与余韵]-ちびた", 
+                    file: "music/情熱と残響[热情与余韵]-ちびた.m4a",
+                    type: "special"
+                }
+            }
+        };
+        
+        // 音乐播放器状态
+        const musicPlayer = {
+            audio: new Audio(),
+            isPlaying: false,
+            currentTrack: null,
+            currentVolume: 0.8,
+            
+            // 初始化
+            init: function() {
+                this.audio.volume = this.currentVolume;
+                
+                this.audio.addEventListener('ended', () => {
+                    this.onTrackEnded();
+                });
+                
+                this.audio.addEventListener('error', (e) => {
+                    console.error('音频播放错误:', e);
+                    this.updateUIStatus('error');
+                });
+                
+                // 初始化默认音乐
+                this.currentTrack = musicConfig.default;
+                this.updateTrackInfo();
+                this.updateUIStatus('stopped');
+            },
+            
+            // 播放音乐
+            play: function(trackConfig = null) {
+                if (trackConfig && trackConfig !== this.currentTrack) {
+                    this.stop();
+                    this.currentTrack = trackConfig;
+                    this.audio.src = trackConfig.file;
+                    this.audio.loop = (trackConfig.type === 'special');
+                    this.audio.load();
+                }
+                
+                if (!this.audio.src && !trackConfig) {
+                    this.currentTrack = musicConfig.default;
+                    this.audio.src = musicConfig.default.file;
+                    this.audio.loop = false;
+                    this.audio.load();
+                }
+                
+                this.audio.play().then(() => {
+                    this.isPlaying = true;
+                    this.updateUIStatus('playing');
+                    this.updateTrackInfo();
+                }).catch(error => {
+                    console.error('播放失败:', error);
+                    this.updateUIStatus('error');
+                });
+            },
+            
+            // 暂停音乐
+            pause: function() {
+                this.audio.pause();
+                this.isPlaying = false;
+                this.updateUIStatus('paused');
+            },
+            
+            // 停止音乐
+            stop: function() {
+                this.audio.pause();
+                this.audio.currentTime = 0;
+                this.isPlaying = false;
+                this.updateUIStatus('stopped');
+            },
+            
+            // 切换播放/暂停
+            togglePlayPause: function() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            },
+            
+            // 设置音量
+            setVolume: function(volume) {
+                this.currentVolume = volume / 100;
+                this.audio.volume = this.currentVolume;
+            },
+            
+            // 更新轨道信息显示
+            updateTrackInfo: function() {
+                const currentTrackEl = document.getElementById('current-track');
+                const playlistInfoEl = document.getElementById('playlist-info');
+                
+                if (this.currentTrack) {
+                    currentTrackEl.textContent = this.currentTrack.name;
+                    
+                    if (this.currentTrack.type === 'default') {
+                        playlistInfoEl.textContent = "默认背景音乐";
+                    } else if (this.currentTrack.type === 'driver') {
+                        playlistInfoEl.textContent = `车手BGM - ${this.currentTrack.driver}`;
+                    } else if (this.currentTrack.type === 'special') {
+                        playlistInfoEl.textContent = "大奖赛特殊BGM";
+                    }
+                }
+            },
+            
+            // 更新UI状态
+            updateUIStatus: function(status) {
+                const statusIndicator = document.getElementById('music-status-indicator');
+                const statusText = document.getElementById('music-status-text');
+                const playBtn = document.getElementById('music-play');
+                const playIcon = playBtn.querySelector('i');
+                
+                statusIndicator.className = 'music-status-indicator';
+                
+                switch(status) {
+                    case 'playing':
+                        statusIndicator.classList.add('playing');
+                        statusText.textContent = '播放中';
+                        playIcon.className = 'fas fa-pause';
+                        break;
+                    case 'paused':
+                        statusIndicator.classList.add('paused');
+                        statusText.textContent = '已暂停';
+                        playIcon.className = 'fas fa-play';
+                        break;
+                    case 'stopped':
+                        statusIndicator.classList.add('stopped');
+                        statusText.textContent = '已停止';
+                        playIcon.className = 'fas fa-play';
+                        break;
+                    case 'error':
+                        statusIndicator.classList.add('stopped');
+                        statusText.textContent = '播放错误';
+                        playIcon.className = 'fas fa-exclamation-triangle';
+                        break;
+                }
+            },
+            
+            // 轨道播放结束处理
+            onTrackEnded: function() {
+                if (this.currentTrack.type === 'driver') {
+                    this.play(musicConfig.default);
+                } else if (this.currentTrack.type === 'default') {
+                    this.audio.currentTime = 0;
+                    this.play();
+                }
+            },
+            
+            // 播放默认音乐
+            playDefault: function() {
+                this.play(musicConfig.default);
+            },
+            
+            // 播放车手BGM
+            playDriverBGM: function(driverName) {
+                const driverKey = driverName === "勒克莱尔" ? "leclerc" : "sainz";
+                if (musicConfig.drivers[driverKey]) {
+                    this.play(musicConfig.drivers[driverKey]);
+                    return true;
+                }
+                return false;
+            },
+            
+            // 播放特殊大奖赛BGM
+            playSpecialRaceBGM: function(raceName) {
+                if (musicConfig.specialRaces[raceName]) {
+                    this.play(musicConfig.specialRaces[raceName]);
+                    return true;
+                }
+                return false;
+            }
+        };
+        
+        // 初始化音乐播放器
+        musicPlayer.init();
+        
+        // ============================================
+        // 音乐播放器UI控制
+        // ============================================
+        const toggleMusicBtn = document.getElementById('toggle-music-btn');
+        const musicPlayBtn = document.getElementById('music-play');
+        const musicPrevBtn = document.getElementById('music-prev');
+        const musicNextBtn = document.getElementById('music-next');
+        const volumeSlider = document.getElementById('volume-slider');
+        const musicPlayerEl = document.getElementById('music-player');
+        
+        // 切换音乐播放器折叠状态
+        toggleMusicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            musicPlayerEl.classList.toggle('collapsed');
+            
+            const icon = toggleMusicBtn.querySelector('i');
+            if (musicPlayerEl.classList.contains('collapsed')) {
+                icon.className = 'fas fa-chevron-right';
+            } else {
+                icon.className = 'fas fa-music';
+            }
+        });
+        
+        // 播放/暂停按钮
+        musicPlayBtn.addEventListener('click', () => {
+            musicPlayer.togglePlayPause();
+        });
+        
+        // 上一曲按钮 - 播放默认音乐
+        musicPrevBtn.addEventListener('click', () => {
+            musicPlayer.playDefault();
+        });
+        
+        // 下一曲按钮 - 播放默认音乐
+        musicNextBtn.addEventListener('click', () => {
+            musicPlayer.playDefault();
+        });
+        
+        // 音量控制
+        volumeSlider.addEventListener('input', (e) => {
+            musicPlayer.setVolume(e.target.value);
+        });
+        
+        // ============================================
+        // 页面切换音乐管理
+        // ============================================
+        function onPageChanged(pageIndex) {
+            if (!musicPlayer.isPlaying) return;
+            
+            switch(pageIndex) {
+                case 0:
+                    musicPlayer.playDefault();
+                    break;
+                case 1:
+                    musicPlayer.playDefault();
+                    break;
+                case 2:
+                    musicPlayer.playDefault();
+                    break;
+                case 3:
+                    musicPlayer.playDefault();
+                    break;
+            }
+        }
+        
+        // ============================================
+        // 24站大奖赛数据 - 添加赛事总结
+        // ============================================
+        const racesData = [
+            { 
+                round: 1, 
+                name: "澳大利亚大奖赛", 
+                location: "墨尔本-阿尔伯特公园赛道", 
+                date: "2025年3月16日", 
+                results: { 
+                    ferrari: { position: "8", points: 4, fastestLap: false }, 
+                    williams: { position: "DNF", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "签字之时小麦一下……",
+                media: {
+                    images: ["media/race-1-image-1.jpg", "media/race-1-image-2.jpg"],
+                    gifs: ["media/race-1-gif-1.gif"],
+                    videos: ["media/race-1-video-1.mp4"]
+                }
+            },
+            { 
+                round: 2, 
+                name: "中国大奖赛", 
+                location: "上海-上海国际赛道", 
+                date: "2025年3月23日",
+                results: { 
+                    ferrari: { position: "DSQ", points: 0, fastestLap: false }, 
+                    williams: { position: "10", points: 1, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "非常好拉猪车，就这样眼里没有其他人的不停聊天……",
+                media: {
+                    images: ["media/race-2-image-1.jpg"],
+                    gifs: ["media/race-2-gif-1.gif", "media/race-2-gif-2.gif"],
+                    videos: ["media/race-2-video-1.mp4"]
+                }
+            },
+            { 
+                round: 3, 
+                name: "日本大奖赛", 
+                location: "铃鹿-铃鹿国际赛车场", 
+                date: "2025年4月6日",
+                results: { 
+                    ferrari: { position: "4", points: 12, fastestLap: false }, 
+                    williams: { position: "14", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "赛前大麦！",
+                media: {
+                    images: ["media/race-3-image-1.jpg", "media/race-3-image-2.jpg", "media/race-3-image-3.jpg"],
+                    gifs: [],
+                    videos: ["media/race-3-video-1.mp4"]
+                }
+            },
+            { 
+                round: 4, 
+                name: "巴林大奖赛", 
+                location: "萨基尔-巴林国际赛道", 
+                date: "2025年4月13日",
+                results: { 
+                    ferrari: { position: "4", points: 12, fastestLap: false }, 
+                    williams: { position: "DNF", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "在同事身后偷偷摸手，一百年也没有人想通这到底是为什么。",
+                media: {
+                    images: ["media/race-4-image-1.jpg"],
+                    gifs: ["media/race-4-gif-1.gif"],
+                    videos: ["media/race-4-video-1.mp4"]
+                }
+            },
+            { 
+                round: 5, 
+                name: "沙特阿拉伯大奖赛", 
+                location: "吉达-吉达街道赛道", 
+                date: "2025年4月21日",
+                results: { 
+                    ferrari: { position: "3", points: 15, fastestLap: false }, 
+                    williams: { position: "8", points: 4, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "引用B站的视频标题：“如同做了夫妻一般”",
+                media: {
+                    images: ["media/race-5-image-1.jpg", "media/race-5-image-2.jpg"],
+                    gifs: ["media/race-5-gif-1.gif"],
+                    videos: ["media/race-5-video-1.mp4"]
+                }
+            },
+            { 
+                round: 6, 
+                name: "迈阿密大奖赛", 
+                location: "佛罗里达-迈阿密国际赛道", 
+                date: "2025年5月5日",
+                results: { 
+                    ferrari: { position: "7", points: 6, fastestLap: false }, 
+                    williams: { position: "9", points: 2, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "看板郎两位",
+                media: {
+                    images: ["media/race-6-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-6-video-1.mp4"]
+                }
+            },
+            { 
+                round: 7, 
+                name: "伊莫拉大奖赛", 
+                location: "伊莫拉-伊莫拉赛道", 
+                date: "2025年5月18日",
+                results: { 
+                    ferrari: { position: "6", points: 8, fastestLap: false }, 
+                    williams: { position: "8", points: 4, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "不动声色地麦了",
+                media: {
+                    images: ["media/race-7-image-1.jpg", "media/race-7-image-2.jpg", "media/race-7-image-3.jpg"],
+                    gifs: ["media/race-7-gif-1.gif", "media/race-7-gif-2.gif"],
+                    videos: ["media/race-7-video-1.mp4"]
+                }
+            },
+            { 
+                round: 8, 
+                name: "摩纳哥大奖赛", 
+                location: "摩纳哥-蒙特卡罗赛道", 
+                date: "2025年5月25日",
+                results: { 
+                    ferrari: { position: "2", points: 18, fastestLap: false }, 
+                    williams: { position: "10", points: 1, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "慈善赛也被放进了这里…运气好的话您会抽到骑车成就的！",
+                media: {
+                    images: [],
+                    gifs: ["media/race-8-gif-1.gif"],
+                    videos: ["media/race-8-video-1.mp4"]
+                }
+            },
+            { 
+                round: 9, 
+                name: "西班牙大奖赛", 
+                location: "巴塞罗那-加泰罗尼亚赛道", 
+                date: "2025年6月1日",
+                results: { 
+                    ferrari: { position: "3", points: 15, fastestLap: false }, 
+                    williams: { position: "14", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "Leo在包上^^",
+                media: {
+                    images: ["media/race-9-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-9-video-1.mp4"]
+                }
+            },
+            { 
+                round: 10, 
+                name: "加拿大大奖赛", 
+                location: "蒙特利尔-吉尔斯  维伦纽夫赛道", 
+                date: "2025年6月16日",
+                results: { 
+                    ferrari: { position: "5", points: 10, fastestLap: false }, 
+                    williams: { position: "10", points: 1, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "签字2.0！",
+                media: {
+                    images: ["media/race-10-image-1.jpg", "media/race-10-image-2.jpg"],
+                    gifs: ["media/race-10-gif-1.gif"],
+                    videos: ["media/race-10-video-1.mp4"]
+                }
+            },
+            { 
+                round: 11, 
+                name: "奥地利大奖赛", 
+                location: "斯皮尔伯格-红牛环赛道", 
+                date: "2025年6月29日",
+                results: { 
+                    ferrari: { position: "3", points: 15, fastestLap: false }, 
+                    williams: { position: "DNS", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "采访中断，欣赏一下16的lap",
+                media: {
+                    images: ["media/race-11-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-11-video-1.mp4"]
+                }
+            },
+            { 
+                round: 12, 
+                name: "英国大奖赛", 
+                location: "北安普敦郡-银石赛道", 
+                date: "2025年7月6日",
+                results: { 
+                    ferrari: { position: "14", points: 0, fastestLap: false }, 
+                    williams: { position: "12", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "冲突一下但道歉了",
+                media: {
+                    images: ["media/race-12-image-1.jpg", "media/race-12-image-2.jpg"],
+                    gifs: ["media/race-12-gif-1.gif"],
+                    videos: ["media/race-12-video-1.mp4"]
+                }
+            },
+            { 
+                round: 13, 
+                name: "比利时大奖赛", 
+                location: "斯塔沃洛-斯帕赛道", 
+                date: "2025年7月27日",
+                results: { 
+                    ferrari: { position: "3", points: 15, fastestLap: false }, 
+                    williams: { position: "18", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "Fly Together! 本站有特殊bgm！",
+                media: {
+                    images: ["media/race-13-image-1.jpg", "media/race-13-image-2.jpg", "media/race-13-image-3.jpg"],
+                    gifs: ["media/race-13-gif-1.gif", "media/race-13-gif-2.gif"],
+                    videos: ["media/race-13-video-1.mp4"]
+                }
+            },
+            { 
+                round: 14, 
+                name: "匈牙利大奖赛", 
+                location: "莫焦罗德-匈格罗宁赛道", 
+                date: "2025年8月3日",
+                results: { 
+                    ferrari: { position: "4", points: 12, fastestLap: false }, 
+                    williams: { position: "14", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "勒克莱尔",
+                summary: "男子高中生之下车也要一起走",
+                media: {
+                    images: ["media/race-14-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-14-video-1.mp4"]
+                }
+            },
+            { 
+                round: 15, 
+                name: "荷兰大奖赛", 
+                location: "北荷兰省-赞德沃特公园赛道", 
+                date: "2025年8月31日",
+                results: { 
+                    ferrari: { position: "DNF", points: 0, fastestLap: false }, 
+                    williams: { position: "13", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "撞一下你，理理我嘛",
+                media: {
+                    images: ["media/race-15-image-1.jpg", "media/race-15-image-2.jpg"],
+                    gifs: ["media/race-15-gif-1.gif"],
+                    videos: ["media/race-15-video-1.mp4"]
+                }
+            },
+            { 
+                round: 16, 
+                name: "意大利大奖赛", 
+                location: "蒙扎赛道", 
+                date: "2025年9月7日",
+                results: { 
+                    ferrari: { position: "4", points: 12, fastestLap: false }, 
+                    williams: { position: "11", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "又签到一起了！赛后应该还有一起巡游来着(可惜没找到视频",
+                media: {
+                    images: ["media/race-16-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-16-video-1.mp4"]
+                }
+            },
+            { 
+                round: 17, 
+                name: "阿塞拜疆大奖赛", 
+                location: "巴库市街赛道", 
+                date: "2025年9月21日",
+                results: { 
+                    ferrari: { position: "9", points: 2, fastestLap: false }, 
+                    williams: { position: "3", points: 15, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "公路旅行的伟大无需多言！本站有特殊bgm！",
+                media: {
+                    images: ["media/race-17-image-1.jpg", "media/race-17-image-2.jpg"],
+                    gifs: ["media/race-17-gif-1.gif"],
+                    videos: ["media/race-17-video-1.mp4"]
+                }
+            },
+            { 
+                round: 18, 
+                name: "新加坡大奖赛", 
+                location: "新加坡-滨海湾街道赛道", 
+                date: "2025年10月5日",
+                results: { 
+                    ferrari: { position: "6", points: 8, fastestLap: false }, 
+                    williams: { position: "10", points: 1, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "两位司机就这样让媒体找不到正脸",
+                media: {
+                    images: ["media/race-18-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-18-video-1.mp4"]
+                }
+            },
+            { 
+                round: 19, 
+                name: "美国大奖赛", 
+                location: "得克萨斯州-奥斯汀赛道", 
+                date: "2025年10月20日",
+                results: { 
+                    ferrari: { position: "3", points: 15, fastestLap: false }, 
+                    williams: { position: "DNF", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "麦了",
+                media: {
+                    images: ["media/race-19-image-1.jpg", "media/race-19-image-2.jpg"],
+                    gifs: ["media/race-19-gif-1.gif", "media/race-19-gif-2.gif"],
+                    videos: ["media/race-19-video-1.mp4"]
+                }
+            },
+            { 
+                round: 20, 
+                name: "墨西哥大奖赛", 
+                location: "墨西哥城-赫马诺斯·罗德里格斯赛道", 
+                date: "2025年10月27日",
+                results: { 
+                    ferrari: { position: "3", points: 15, fastestLap: false }, 
+                    williams: { position: "17", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "“他很快，不是吗”——卡洛斯·塞恩斯",
+                media: {
+                    images: ["media/race-20-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-20-video-1.mp4"]
+                }
+            },
+            { 
+                round: 21, 
+                name: "巴西大奖赛", 
+                location: "圣保罗-英特拉格斯赛道", 
+                date: "2025年11月10日",
+                results: { 
+                    ferrari: { position: "DNF", points: 0, fastestLap: false }, 
+                    williams: { position: "13", points: 0, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "挣扎着摆上两张美丽的拍立得",
+                media: {
+                    images: ["media/race-21-image-1.jpg", "media/race-21-image-2.jpg"],
+                    gifs: ["media/race-21-gif-1.gif"],
+                    videos: ["media/race-21-video-1.mp4"]
+                }
+            },
+            { 
+                round: 22, 
+                name: "拉斯维加斯大奖赛", 
+                location: "拉斯维加斯-拉斯维加斯赛道", 
+                date: "2025年11月23日",
+                results: { 
+                    ferrari: { position: "4", points: 12, fastestLap: false }, 
+                    williams: { position: "5", points: 10, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "搜遍微博看到有老师发的视频……很萌呀cmbyn！",
+                media: {
+                    images: ["media/race-22-image-1.jpg"],
+                    gifs: [],
+                    videos: ["media/race-22-video-1.mp4"]
+                }
+            },
+            { 
+                round: 23, 
+                name: "卡塔尔大奖赛", 
+                location: "多哈-罗塞尔国际赛道", 
+                date: "2025年12月1日",
+                results: { 
+                    ferrari: { position: "8", points: 4, fastestLap: false }, 
+                    williams: { position: "3", points: 15, fastestLap: false } 
+                },
+                themeColor: "blue", 
+                pole: "",
+                summary: "离婚圣地，当然复婚也很快…",
+                media: {
+                    images: ["media/race-23-image-1.jpg", "media/race-23-image-2.jpg"],
+                    gifs: ["media/race-23-gif-1.gif"],
+                    videos: ["media/race-23-video-1.mp4"]
+                }
+            },
+            { 
+                round: 24, 
+                name: "阿布扎比大奖赛", 
+                location: "亚斯岛-亚斯码头赛道", 
+                date: "2025年12月7日",
+                results: { 
+                    ferrari: { position: "4", points: 12, fastestLap: true }, 
+                    williams: { position: "13", points: 0, fastestLap: false } 
+                },
+                themeColor: "red", 
+                pole: "",
+                summary: "用伟大的一麦为2025画上句号。",
+                media: {
+                    images: ["media/race-24-image-1.jpg", "media/race-24-image-2.jpg", "media/race-24-image-3.jpg"],
+                    gifs: ["media/race-24-gif-1.gif", "media/race-24-gif-2.gif"],
+                    videos: ["media/race-24-video-1.mp4"]
+                }
+            }
+        ];
+
+        // 修正领奖台判断逻辑
+        racesData.forEach(race => {
+            const ferrariPos = race.results.ferrari.position;
+            const williamsPos = race.results.williams.position;
+            
+            const ferrariPodium = (parseInt(ferrariPos) >= 1 && parseInt(ferrariPos) <= 3 && 
+                                  ferrariPos !== "DNF" && ferrariPos !== "DSQ" && ferrariPos !== "DNS");
+            
+            const williamsPodium = (parseInt(williamsPos) >= 1 && parseInt(williamsPos) <= 3 && 
+                                   williamsPos !== "DNF" && williamsPos !== "DSQ" && williamsPos !== "DNS");
+            
+            race.podium = ferrariPodium || williamsPodium;
+            
+            if (race.podium) {
+                race.podiumDriver = ferrariPodium ? "勒克莱尔" : "塞恩斯";
+            } else {
+                race.podiumDriver = null;
+            }
+        });
+        
+        // ============================================
+        // 初始化封面线条
+        // ============================================
+        function initCoverLines() {
+            const linesContainer = document.getElementById('coverLines');
+            const lineCount = 30;
+            
+            linesContainer.innerHTML = '';
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.className = 'line';
+                
+                if (i % 2 === 0) {
+                    line.classList.add('line-red');
+                } else {
+                    line.classList.add('line-blue');
+                }
+                
+                const width = Math.random() * 120 + 30;
+                const height = 2;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const rotation = Math.random() * 360;
+                
+                line.style.width = `${width}px`;
+                line.style.height = `${height}px`;
+                line.style.left = `${left}%`;
+                line.style.top = `${top}%`;
+                line.style.transform = `rotate(${rotation}deg)`;
+                line.style.opacity = Math.random() * 0.3 + 0.1;
+                
+                linesContainer.appendChild(line);
+            }
+        }
+        
+        // ============================================
+        // 24站大奖赛卡片生成
+        // ============================================
+        function generateRaceCards() {
+            const racesContainer = document.getElementById('races-container');
+            racesContainer.innerHTML = '';
+            
+            racesData.forEach(race => {
+                const raceCard = document.createElement('div');
+                raceCard.className = 'race-card';
+                raceCard.dataset.raceIndex = race.round - 1;
+                
+                const themeColor = race.themeColor;
+                const colorCode = themeColor === "red" ? "#e10600" : "#00a3e0";
+                
+                raceCard.style.borderLeft = `5px solid ${colorCode}`;
+                
+                const hasPodium = race.podium;
+                const hasPole = race.pole;
+                const hasFastestLap = race.results.ferrari.fastestLap || race.results.williams.fastestLap;
+                const hasSpecialBGM = musicConfig.specialRaces[race.name];
+                
+                const imageCount = race.media.images.length;
+                const gifCount = race.media.gifs.length;
+                const videoCount = race.media.videos.length;
+                
+                // 修正的媒体显示格式 - 简化版
+                let mediaDisplay = '';
+                let mediaParts = [];
+                
+                if (imageCount > 0) {
+                    mediaParts.push(`<span style="color: #00a3e0;">${imageCount}张图片</span>`);
+                }
+                if (gifCount > 0) {
+                    mediaParts.push(`<span style="color: #ff9900;">${gifCount}个动图</span>`);
+                }
+                if (videoCount > 0) {
+                    mediaParts.push(`<span style="color: #e10600;">${videoCount}个视频</span>`);
+                }
+                
+                mediaDisplay = mediaParts.join(' | ');
+                
+                // 确保mediaDisplay有值
+                const mediaInfo = mediaDisplay ? mediaDisplay : '暂无媒体';
+                
+                raceCard.innerHTML = `
+                    <div class="race-card-header">
+                        <div class="race-card-round" style="color: ${colorCode}">第${race.round}站</div>
+                        <h3 class="race-card-name">${race.name}</h3>
+                        <div class="race-card-location">${race.location}</div>
+                        <div class="race-card-date">${race.date}</div>
+                        ${hasPodium ? `<div style="margin-top: 5px; font-size: 1rem; color: #ffcc00;"><i class="fas fa-trophy"></i> ${race.podiumDriver}登上领奖台</div>` : ''}
+                        ${hasPole ? `<div style="margin-top: 5px; font-size: 1rem; color: #e10600;"><i class="fas fa-flag"></i> ${hasPole}杆位</div>` : ''}
+                        ${hasFastestLap ? `<div style="margin-top: 5px; font-size: 1rem; color: #00a3e0;"><i class="fas fa-stopwatch"></i> 最快圈速</div>` : ''}
+                        <div style="margin-top: 10px; font-size: 1rem; color: #cccccc;">
+                            <i class="fas fa-photo-video"></i> 媒体资料: ${mediaInfo}
+                        </div>
+                    </div>
+                    <div class="race-card-results">
+                        <div class="race-card-driver ferrari">
+                            <div class="race-card-driver-number">16</div>
+                            <div class="race-card-driver-name">勒克莱尔</div>
+                            <div class="race-card-driver-position">${race.results.ferrari.position}${race.results.ferrari.fastestLap ? " FL" : ""}</div>
+                        </div>
+                        <div class="race-card-driver williams">
+                            <div class="race-card-driver-number">55</div>
+                            <div class="race-card-driver-name">塞恩斯</div>
+                            <div class="race-card-driver-position">${race.results.williams.position}</div>
+                        </div>
+                    </div>
+                    <div class="race-card-more" style="color: ${colorCode}">
+                        点击查看详细数据 <i class="fas fa-chevron-right"></i>
+                    </div>
+                `;
+                
+                raceCard.addEventListener('click', () => {
+                    openFullRacePage(race.round - 1);
+                });
+                
+                racesContainer.appendChild(raceCard);
+            });
+        }
+        
+        // ============================================
+        // 媒体文件处理系统 - 优化版本
+        // ============================================
+        const mediaCache = new Map();
+        
+        // 检查文件是否存在
+        async function checkFileExists(url) {
+            if (mediaCache.has(url + '_exists')) {
+                return mediaCache.get(url + '_exists');
+            }
+            
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                const exists = response.ok;
+                
+                mediaCache.set(url + '_exists', exists);
+                
+                return exists;
+            } catch {
+                mediaCache.set(url + '_exists', false);
+                return false;
+            }
+        }
+        
+        // 获取实际存在的媒体文件
+        async function getAvailableMediaFiles(mediaList) {
+            const availableFiles = [];
+            
+            for (const file of mediaList) {
+                if (await checkFileExists(file)) {
+                    availableFiles.push(file);
+                }
+            }
+            
+            return availableFiles;
+        }
+        
+        // 收集所有媒体文件
+        async function collectAllMediaFiles(race) {
+            const allMedia = {
+                images: [],
+                gifs: [],
+                videos: []
+            };
+            
+            // 收集预设的媒体文件
+            allMedia.images = await getAvailableMediaFiles(race.media.images || []);
+            allMedia.gifs = await getAvailableMediaFiles(race.media.gifs || []);
+            allMedia.videos = await getAvailableMediaFiles(race.media.videos || []);
+            
+            // 尝试动态发现更多媒体文件
+            const discoveredMedia = await discoverMediaFiles(race);
+            
+            // 合并去重
+            allMedia.images = [...new Set([...allMedia.images, ...discoveredMedia.images])];
+            allMedia.gifs = [...new Set([...allMedia.gifs, ...discoveredMedia.gifs])];
+            allMedia.videos = [...new Set([...allMedia.videos, ...discoveredMedia.videos])];
+            
+            return allMedia;
+        }
+        
+        // 动态发现媒体文件
+        async function discoverMediaFiles(race) {
+            const discoveredMedia = {
+                images: [],
+                gifs: [],
+                videos: []
+            };
+            
+            const basePath = `media/race-${race.round}`;
+            const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+            const gifExtension = '.gif';
+            
+            // 检查图片（最多10张）
+            for (let i = 1; i <= 10; i++) {
+                let found = false;
+                
+                for (const ext of imageExtensions) {
+                    const filename = `${basePath}-image-${i}${ext}`;
+                    if (await checkFileExists(filename)) {
+                        discoveredMedia.images.push(filename);
+                        found = true;
+                        break;
+                    }
+                }
+                
+                if (!found) break;
+            }
+            
+            // 检查动图（最多5个）
+            for (let i = 1; i <= 5; i++) {
+                const filename = `${basePath}-gif-${i}${gifExtension}`;
+                if (await checkFileExists(filename)) {
+                    discoveredMedia.gifs.push(filename);
+                } else {
+                    break;
+                }
+            }
+            
+            // 检查视频（最多3个）
+            for (let i = 1; i <= 3; i++) {
+                const filename = `${basePath}-video-${i}.mp4`;
+                if (await checkFileExists(filename)) {
+                    discoveredMedia.videos.push(filename);
+                } else {
+                    // 也检查旧格式
+                    const oldFilename = `media/race-${race.round}-video.mp4`;
+                    if (i === 1 && await checkFileExists(oldFilename)) {
+                        discoveredMedia.videos.push(oldFilename);
+                    }
+                    break;
+                }
+            }
+            
+            return discoveredMedia;
+        }
+        
+        // 生成媒体网格
+        async function generateMediaGrid(race) {
+            const allMedia = await collectAllMediaFiles(race);
+            
+            // 计算实际存在的媒体数量
+            const imageCount = allMedia.images.length;
+            const gifCount = allMedia.gifs.length;
+            const videoCount = allMedia.videos.length;
+            const totalMedia = imageCount + gifCount + videoCount;
+            
+            // 如果没有媒体文件
+            if (totalMedia === 0) {
+                return {
+                    html: `
+                        <div class="no-media-message">
+                            <i class="fas fa-camera-slash" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                            <p>本站比赛暂无媒体资料</p>
+                        </div>
+                    `,
+                    counts: { images: 0, gifs: 0, videos: 0, total: 0 }
+                };
+            }
+            
+            // 创建媒体项目数组
+            let mediaItems = [];
+            
+            // 添加图片
+            allMedia.images.forEach(src => {
+                mediaItems.push({
+                    type: 'image',
+                    src: src,
+                    alt: `${race.name}图片`
+                });
+            });
+            
+            // 添加动图
+            allMedia.gifs.forEach(src => {
+                mediaItems.push({
+                    type: 'gif',
+                    src: src,
+                    alt: `${race.name}动图`
+                });
+            });
+            
+            // 添加视频
+            allMedia.videos.forEach(src => {
+                mediaItems.push({
+                    type: 'video',
+                    src: src,
+                    alt: `${race.name}视频`
+                });
+            });
+            
+            // 按类型排序（视频 > 动图 > 图片）
+            mediaItems.sort((a, b) => {
+                const typeOrder = { video: 0, gif: 1, image: 2 };
+                return typeOrder[a.type] - typeOrder[b.type];
+            });
+            
+            // 生成媒体网格HTML
+            let mediaGridHTML = `
+                <div class="media-container" id="media-container-${race.round}">
+            `;
+            
+            // 生成媒体项目
+            mediaItems.forEach((item, index) => {
+                if (item.type === 'video') {
+                    mediaGridHTML += `
+                        <div class="media-item" id="media-item-${race.round}-${index}">
+                            <div class="media-label">视频</div>
+                            <div class="video-play-overlay" data-video="${item.src}">
+                                <div class="video-play-icon">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="video-wrapper">
+                                <video muted playsinline preload="metadata" autoplay loop>
+                                    <source src="${item.src}" type="video/mp4">
+                                    您的浏览器不支持视频播放
+                                </video>
+                            </div>
+                        </div>
+                    `;
+                } else if (item.type === 'gif') {
+                    mediaGridHTML += `
+                        <div class="media-item" id="media-item-${race.round}-${index}">
+                            <div class="media-label">动图</div>
+                            <div class="gif-wrapper">
+                                <img src="${item.src}" alt="${item.alt}" loading="lazy" autoplay loop>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    mediaGridHTML += `
+                        <div class="media-item" id="media-item-${race.round}-${index}">
+                            <div class="media-label">图片</div>
+                            <div class="image-wrapper">
+                                <img src="${item.src}" alt="${item.alt}" loading="lazy">
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            
+            mediaGridHTML += `</div>`;
+            
+            return {
+                html: mediaGridHTML,
+                counts: { images: imageCount, gifs: gifCount, videos: videoCount, total: totalMedia }
+            };
+        }
+        
+        // ============================================
+        // 全屏赛事页面
+        // ============================================
+        let currentRaceIndex = 0;
+        const prevRaceBtn = document.getElementById('prev-race-btn');
+        const nextRaceBtn = document.getElementById('next-race-btn');
+        
+        // 打开全屏赛事页面
+        function openFullRacePage(raceIndex) {
+            currentRaceIndex = raceIndex;
+            updateFullRacePage();
+        }
+        
+        // 更新全屏赛事页面 - 使用新的赛事总结
+        async function updateFullRacePage() {
+            const race = racesData[currentRaceIndex];
+            const fullRacePage = document.getElementById('full-race-page');
+            const fullRaceContent = document.getElementById('full-race-content');
+            
+            const themeColor = race.themeColor;
+            const colorCode = themeColor === "red" ? "#e10600" : "#00a3e0";
+            
+            let podiumDriver = race.podiumDriver;
+            const hasSpecialBGM = musicConfig.specialRaces[race.name];
+            
+            // 获取媒体网格和实际数量
+            const mediaResult = await generateMediaGrid(race);
+            const mediaCounts = mediaResult.counts;
+            
+            // 生成媒体显示文本
+            let mediaDisplayText = '';
+            let mediaParts = [];
+            
+            if (mediaCounts.images > 0) {
+                mediaParts.push(`<span style="color: #00a3e0;">${mediaCounts.images}张图片</span>`);
+            }
+            if (mediaCounts.gifs > 0) {
+                mediaParts.push(`<span style="color: #ff9900;">${mediaCounts.gifs}个动图</span>`);
+            }
+            if (mediaCounts.videos > 0) {
+                mediaParts.push(`<span style="color: #e10600;">${mediaCounts.videos}个视频</span>`);
+            }
+            
+            mediaDisplayText = mediaParts.join(' | ');
+            
+            // 生成全屏赛事内容 - 使用新的赛事总结
+            fullRaceContent.innerHTML = `
+                <div class="race-header">
+                    <div class="race-info">
+                        <div class="race-round" style="color: ${colorCode}">第${race.round}站</div>
+                        <h2 class="race-name">${race.name}</h2>
+                        <div class="race-location" style="color: ${colorCode}">${race.location}</div>
+                        <div class="race-date">${race.date}</div>
+                        ${race.podium ? `<div style="margin-top: 10px; font-size: 1.2rem; color: #ffcc00;"><i class="fas fa-trophy"></i> 本站登上领奖台的车手：<strong>${podiumDriver}</strong></div>` : ''}
+                        ${race.pole ? `<div style="margin-top: 5px; font-size: 1.2rem; color: #e10600;"><i class="fas fa-flag"></i> 杆位: ${race.pole}</div>` : ''}
+                        <div style="margin-top: 10px; font-size: 1.1rem; color: #cccccc;">
+                            <i class="fas fa-photo-video"></i> 媒体资料: ${mediaDisplayText || '暂无媒体'}
+                        </div>
+                    </div>
+                    <div style="font-size: 2.5rem; color: ${colorCode};">🏁</div>
+                </div>
+                
+                <div class="race-content">
+                    <div class="race-results">
+                        <h3 style="color: ${colorCode}">车手成绩</h3>
+                        <div class="driver-results">
+                            <div class="driver-result-card driver-result-ferrari">
+                                <div>
+                                    <div class="driver-result-header">
+                                        <div class="driver-result-number">16</div>
+                                        <div class="driver-result-name">夏尔·勒克莱尔</div>
+                                    </div>
+                                    <div class="result-details">
+                                        <div class="result-detail">
+                                            <div class="detail-label">完赛名次</div>
+                                            <div class="detail-value">${race.results.ferrari.position}${race.results.ferrari.fastestLap ? " FL" : ""}</div>
+                                        </div>
+                                        <div class="result-detail">
+                                            <div class="detail-label">得分</div>
+                                            <div class="detail-value">${race.results.ferrari.points}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-result-card driver-result-williams">
+                                <div>
+                                    <div class="driver-result-header">
+                                        <div class="driver-result-number">55</div>
+                                        <div class="driver-result-name">卡洛斯·塞恩斯</div>
+                                    </div>
+                                    <div class="result-details">
+                                        <div class="result-detail">
+                                            <div class="detail-label">完赛名次</div>
+                                            <div class="detail-value">${race.results.williams.position}</div>
+                                        </div>
+                                        <div class="result-detail">
+                                            <div class="detail-label">得分</div>
+                                            <div class="detail-value">${race.results.williams.points}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="race-media">
+                        <div>
+                            <h3 style="color: ${colorCode}">赛事总结</h3>
+                            <div class="race-summary">
+                                <p>${race.summary}</p>
+                                ${race.podium ? 
+                                    `<p style="color: #ffcc00; margin-top: 15px;"><i class="fas fa-trophy"></i> <strong>${podiumDriver}</strong>在本站比赛中登上领奖台，为车队赢得了宝贵荣誉！</p>` : 
+                                    `<p style="color: #cccccc; margin-top: 15px;"><i class="fas fa-flag-checkered"></i> 本站比赛竞争激烈，两位车手都展现了顽强的拼搏精神。</p>`
+                                }
+                                ${race.pole ? `<p style="color: #e10600; margin-top: 10px;"><i class="fas fa-flag"></i> ${race.pole}在本站比赛中夺得杆位！</p>` : ''}
+                            </div>
+                        </div>
+                        
+                        <div class="media-section">
+                            <h4 style="color: ${colorCode}">赛事媒体 (共${mediaCounts.total}个)</h4>
+                            ${mediaResult.html}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            fullRacePage.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // 更新导航按钮状态
+            prevRaceBtn.disabled = currentRaceIndex === 0;
+            nextRaceBtn.disabled = currentRaceIndex === racesData.length - 1;
+            
+            // 根据大奖赛情况播放合适的音乐
+            if (musicPlayer.isPlaying) {
+                if (musicConfig.specialRaces[race.name]) {
+                    musicPlayer.playSpecialRaceBGM(race.name);
+                } else if (race.podium && race.podiumDriver) {
+                    musicPlayer.playDriverBGM(podiumDriver);
+                } else {
+                    musicPlayer.playDefault();
+                }
+            } else {
+                if (musicConfig.specialRaces[race.name]) {
+                    musicPlayer.playSpecialRaceBGM(race.name);
+                } else {
+                    musicPlayer.playDefault();
+                }
+            }
+            
+            // 绑定视频点击事件
+            setTimeout(() => {
+                bindVideoEvents();
+                
+                // 自动播放视频（静音）
+                setTimeout(() => {
+                    document.querySelectorAll('video').forEach(video => {
+                        video.muted = true;
+                        video.play().catch(e => {
+                            // 自动播放被阻止，不显示错误
+                        });
+                    });
+                }, 500);
+            }, 100);
+        }
+        
+        // 绑定视频点击事件
+        function bindVideoEvents() {
+            document.querySelectorAll('.video-play-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function() {
+                    const videoFile = this.dataset.video;
+                    modalVideo.src = videoFile || "";
+                    videoModal.style.display = 'flex';
+                    modalVideo.play();
+                });
+            });
+        }
+        
+        // 导航到上一站
+        prevRaceBtn.addEventListener('click', () => {
+            if (currentRaceIndex > 0) {
+                currentRaceIndex--;
+                updateFullRacePage();
+            }
+        });
+        
+        // 导航到下一站
+        nextRaceBtn.addEventListener('click', () => {
+            if (currentRaceIndex < racesData.length - 1) {
+                currentRaceIndex++;
+                updateFullRacePage();
+            }
+        });
+        
+        // 关闭全屏赛事页面
+        document.getElementById('close-race-btn').addEventListener('click', () => {
+            document.getElementById('full-race-page').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            if (musicPlayer.isPlaying) {
+                musicPlayer.playDefault();
+            }
+        });
+        
+        // ============================================
+        // 视频播放功能
+        // ============================================
+        const videoModal = document.getElementById('video-modal');
+        const modalVideo = document.getElementById('modal-video');
+        const closeVideoBtn = document.getElementById('close-video');
+        
+        // 视频播放事件监听
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.video-play-overlay')) {
+                const videoFile = e.target.closest('.video-play-overlay').dataset.video;
+                modalVideo.src = videoFile || "";
+                videoModal.style.display = 'flex';
+                modalVideo.play();
+            }
+        });
+        
+        closeVideoBtn.addEventListener('click', () => {
+            modalVideo.pause();
+            videoModal.style.display = 'none';
+        });
+        
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                modalVideo.pause();
+                videoModal.style.display = 'none';
+            }
+        });
+        
+        // ============================================
+        // 成就抽卡系统 - 单纯的抽卡玩法
+        // ============================================
+        const achievementsData = [
+            {
+                id: 1,
+                name: "Getaway Car",
+                unlockTime: "阿塞拜疆",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "Nothing beats a C2 holiday!!!",
+                image: "kudos/1.jpg"
+            },
+            {
+                id: 2,
+                name: "离婚圣地",
+                unlockTime: "卡塔尔",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "当然和好也很快…",
+                image: "kudos/2.jpg"
+            },
+            {
+                id: 3,
+                name: "Fly Together",
+                unlockTime: "比利时、荷兰",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "最相爱的 才能去天涯",
+                image: "kudos/3.jpg"
+            },
+            {
+                id: 4,
+                name: "纯白花嫁",
+                unlockTime: "沙特",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "如同做了夫妻一般",
+                image: "kudos/4.jpg"
+            },
+            {
+                id: 5,
+                name: "骑车的你在我左手边",
+                unlockTime: "摩纳哥",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "你要保持平衡，你要不停移动",
+                image: "kudos/5.jpg"
+            },
+            {
+                id: 6,
+                name: "SIGN",
+                unlockTime: "澳大利亚、加拿大、意大利",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "Ayaya我们又在一起签字！",
+                image: "kudos/6.jpg"
+            },
+            {
+                id: 7,
+                name: "伞",
+                unlockTime: "墨西哥",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "我们一起躲在下面",
+                image: "kudos/7.jpg"
+            },
+            {
+                id: 8,
+                name: "Call me by your name",
+                unlockTime: "墨西哥、拉斯维加斯",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "都 C 2 了 ！",
+                image: "kudos/8.jpg"
+            },
+            {
+                id: 9,
+                name: "讨厌的雨天",
+                unlockTime: "英国",
+                unlockPersonnel: "勒克莱尔、塞恩斯",
+                details: "被雨水淋湿后脾气就会变得很坏的猫和表示体谅的狗…道歉好快呀夏尔。",
+                image: "kudos/9.jpg"
+            }
+        ];
+        
+        // 随机抽取成就卡
+        function lotteryAchievement() {
+            // 随机选择一个成就
+            const randomIndex = Math.floor(Math.random() * achievementsData.length);
+            const selectedAchievement = achievementsData[randomIndex];
+            
+            // 显示成就卡片弹窗
+            const achievementCardModal = document.getElementById('achievement-card-modal');
+            const achievementCardImg = document.getElementById('achievement-card-img');
+            const achievementCardName = document.getElementById('achievement-card-name');
+            const achievementCardTime = document.getElementById('achievement-card-time');
+            const achievementCardPersonnel = document.getElementById('achievement-card-personnel');
+            const achievementCardDetails = document.getElementById('achievement-card-details');
+            
+            // 设置成就卡片内容
+            achievementCardImg.src = selectedAchievement.image;
+            achievementCardImg.alt = selectedAchievement.name;
+            achievementCardName.textContent = selectedAchievement.name;
+            achievementCardTime.textContent = `解锁地点：${selectedAchievement.unlockTime}`;
+            achievementCardPersonnel.textContent = `解锁角色：${selectedAchievement.unlockPersonnel}`;
+            achievementCardDetails.textContent = selectedAchievement.details;
+            
+            // 显示弹窗
+            achievementCardModal.style.display = 'flex';
+            
+            // 播放音效（如果可能）
+            if (musicPlayer.isPlaying) {
+                // 这里可以添加一个简短的成就解锁音效
+            }
+            
+            // 显示通知
+            showNotification(`抽到了成就卡：${selectedAchievement.name}`);
+        }
+        
+        // 绑定抽卡按钮事件
+        document.getElementById('lottery-button').addEventListener('click', lotteryAchievement);
+        
+        // 绑定卡牌背面点击事件
+        document.getElementById('card-back').addEventListener('click', lotteryAchievement);
+        
+        // 绑定关闭卡片按钮事件
+        document.getElementById('close-card-btn').addEventListener('click', () => {
+            document.getElementById('achievement-card-modal').style.display = 'none';
+        });
+        
+        // 点击弹窗外部关闭
+        document.getElementById('achievement-card-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('achievement-card-modal')) {
+                document.getElementById('achievement-card-modal').style.display = 'none';
+            }
+        });
+        
+        // ============================================
+        // 分享功能完善
+        // ============================================
+        const shareOptions = document.getElementById('share-options');
+        const closeShareBtn = document.getElementById('close-share-btn');
+        const shareUrlInput = document.getElementById('share-url');
+        const copyLinkBtn = document.getElementById('copy-link-btn');
+        const copyShareBtn = document.getElementById('copy-share-btn');
+        
+        // 设置分享链接
+        shareUrlInput.value = window.location.href;
+        
+        // 分享报告按钮
+        document.getElementById('share-report').addEventListener('click', function() {
+            shareOptions.style.display = 'block';
+        });
+        
+        // 关闭分享选项
+        closeShareBtn.addEventListener('click', () => {
+            shareOptions.style.display = 'none';
+        });
+        
+        // 点击外部关闭分享选项
+        shareOptions.addEventListener('click', (e) => {
+            if (e.target === shareOptions) {
+                shareOptions.style.display = 'none';
+            }
+        });
+        
+        // 复制链接
+        copyLinkBtn.addEventListener('click', () => {
+            shareUrlInput.select();
+            document.execCommand('copy');
+            showNotification('链接已复制到剪贴板！');
+        });
+        
+        copyShareBtn.addEventListener('click', () => {
+            shareUrlInput.select();
+            document.execCommand('copy');
+            showNotification('链接已复制到剪贴板！');
+        });
+        
+        // 社交媒体分享
+        document.querySelectorAll('.share-btn[data-share]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const platform = this.dataset.share;
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent('F1 2025赛季年终报告');
+                const text = encodeURIComponent('查看这份精彩的F1 2025赛季年终报告！');
+                
+                let shareUrl = '';
+                
+                switch(platform) {
+                    case 'whatsapp':
+                        shareUrl = `https://api.whatsapp.com/send?text=${text}%20${url}`;
+                        break;
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                        break;
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                        break;
+                }
+                
+                if (shareUrl) {
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                    showNotification(`正在打开${platform}...`);
+                }
+            });
+        });
+        
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #00a3e0;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                z-index: 10000;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                font-size: 1rem;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // 再看一遍功能
+        document.getElementById('view-again').addEventListener('click', function() {
+            // 滚动到顶部
+            scrollToPage(0);
+            
+            // 重置音乐
+            musicPlayer.stop();
+            musicPlayer.playDefault();
+            
+            // 显示提示
+            showNotification('让我们重新回顾这个精彩的赛季！');
+            
+            // 添加一些动画效果
+            const pagesContainer = document.getElementById('pages-container');
+            pagesContainer.style.animation = 'none';
+            setTimeout(() => {
+                pagesContainer.style.animation = 'fadeIn 1s ease';
+            }, 10);
+        });
+        
+        // ============================================
+        // 明信片功能
+        // ============================================
+        const postcardBackgrounds = {
+            horizontal: [
+                "backgrounds/background-h-1.jpg",
+                "backgrounds/background-h-2.jpg", 
+                "backgrounds/background-h-3.jpg",
+                "backgrounds/background-h-4.jpg",
+                "backgrounds/background-h-5.jpg",
+                "backgrounds/background-h-6.jpg",
+                "backgrounds/background-h-7.jpg",
+                "backgrounds/background-h-8.jpg",
+                "backgrounds/background-h-9.jpg"
+            ],
+            vertical: [
+                "backgrounds/background-v-1.jpg",
+                "backgrounds/background-v-2.jpg",
+                "backgrounds/background-v-3.jpg",
+                "backgrounds/background-v-4.jpg",
+                "backgrounds/background-v-5.jpg",
+                "backgrounds/background-v-6.jpg",
+                "backgrounds/background-v-7.jpg"
+            ]
+        };
+        
+        const postcardCanvas = document.getElementById('postcard-canvas');
+        const ctx = postcardCanvas.getContext('2d');
+        const generatePostcardBtn = document.getElementById('generate-postcard');
+        const changeBgBtn = document.getElementById('change-bg');
+        const savePostcardBtn = document.getElementById('save-postcard');
+        const postcardTitleInput = document.getElementById('postcard-title-input');
+        const postcardMessageInput = document.getElementById('postcard-message-input');
+        const postcardSignatureInput = document.getElementById('postcard-signature-input');
+        const alignmentButtons = document.querySelectorAll('.alignment-btn');
+        
+        let currentPostcardBackground = null;
+        let usedBackgrounds = { horizontal: [], vertical: [] };
+        let isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        let textAlignment = "left";
+        let signatureAlignment = "center";
+        
+        // 文本对齐按钮事件
+        alignmentButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const type = button.dataset.type;
+                const alignment = button.dataset.alignment;
+                
+                alignmentButtons.forEach(btn => {
+                    if (btn.dataset.type === type) {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                button.classList.add('active');
+                
+                if (type === 'text') {
+                    textAlignment = alignment;
+                } else if (type === 'signature') {
+                    signatureAlignment = alignment;
+                }
+                
+                drawPostcard();
+            });
+        });
+        
+        // 随机选择明信片背景
+        function getRandomPostcardBackground() {
+            const bgType = isMobileDevice ? 'vertical' : 'horizontal';
+            const bgList = postcardBackgrounds[bgType];
+            const usedList = usedBackgrounds[bgType];
+            
+            if (usedList.length >= bgList.length) {
+                usedBackgrounds[bgType] = [];
+            }
+            
+            const availableBgs = bgList.filter(bg => !usedList.includes(bg));
+            
+            if (availableBgs.length === 0) {
+                usedBackgrounds[bgType] = [];
+                return bgList[Math.floor(Math.random() * bgList.length)];
+            }
+            
+            const randomIndex = Math.floor(Math.random() * availableBgs.length);
+            const selectedBg = availableBgs[randomIndex];
+            
+            usedBackgrounds[bgType].push(selectedBg);
+            
+            return selectedBg;
+        }
+        
+        // 绘制明信片
+        function drawPostcard() {
+            ctx.clearRect(0, 0, postcardCanvas.width, postcardCanvas.height);
+            
+            if (!currentPostcardBackground) {
+                currentPostcardBackground = getRandomPostcardBackground();
+            }
+            
+            const bgImage = new Image();
+            bgImage.crossOrigin = "anonymous";
+            bgImage.src = currentPostcardBackground;
+            
+            bgImage.onload = function() {
+                const imgRatio = bgImage.width / bgImage.height;
+                const canvasRatio = postcardCanvas.width / postcardCanvas.height;
+                
+                let drawWidth, drawHeight, offsetX, offsetY;
+                
+                if (imgRatio > canvasRatio) {
+                    drawHeight = postcardCanvas.height;
+                    drawWidth = drawHeight * imgRatio;
+                    offsetX = (postcardCanvas.width - drawWidth) / 2;
+                    offsetY = 0;
+                } else {
+                    drawWidth = postcardCanvas.width;
+                    drawHeight = drawWidth / imgRatio;
+                    offsetX = 0;
+                    offsetY = (postcardCanvas.height - drawHeight) / 2;
+                }
+                
+                ctx.drawImage(bgImage, offsetX, offsetY, drawWidth, drawHeight);
+                
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.fillRect(0, 0, postcardCanvas.width, postcardCanvas.height);
+                
+                // 绘制标题
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 40px "HuiwenMingChao", "SimSun", serif';
+                
+                const title = postcardTitleInput.value || "F1 2025赛季纪念";
+                ctx.fillText(title, postcardCanvas.width / 2, 60);
+                
+                ctx.strokeStyle = '#e10600';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(postcardCanvas.width / 2 - 100, 80);
+                ctx.lineTo(postcardCanvas.width / 2 + 100, 80);
+                ctx.stroke();
+                
+                // 绘制正文
+                ctx.textAlign = textAlignment;
+                let textX;
+                switch(textAlignment) {
+                    case "left":
+                        textX = 40;
+                        break;
+                    case "right":
+                        textX = postcardCanvas.width - 40;
+                        break;
+                    case "center":
+                    default:
+                        textX = postcardCanvas.width / 2;
+                        break;
+                }
+                
+                const message = postcardMessageInput.value || "这是一个充满激情与速度的赛季...";
+                ctx.font = '24px "HuiwenMingChao", "SimSun", serif';
+                
+                const maxWidth = textAlignment === "center" ? postcardCanvas.width - 80 : postcardCanvas.width - 80;
+                const lineHeight = 32;
+                let y = 120;
+                
+                const paragraphs = message.split('\n');
+                
+                for (let paragraph of paragraphs) {
+                    let words = paragraph.split(' ');
+                    let line = '';
+                    
+                    for (let i = 0; i < words.length; i++) {
+                        const testLine = line + words[i] + ' ';
+                        const metrics = ctx.measureText(testLine);
+                        const testWidth = metrics.width;
+                        
+                        if (testWidth > maxWidth && i > 0) {
+                            ctx.fillText(line, textX, y);
+                            line = words[i] + ' ';
+                            y += lineHeight;
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    
+                    if (line) {
+                        ctx.fillText(line.trim(), textX, y);
+                        y += lineHeight;
+                    }
+                    
+                    y += lineHeight * 0.5;
+                }
+                
+                // 绘制签名
+                ctx.textAlign = signatureAlignment;
+                let signatureX;
+                let signatureText;
+                
+                switch(signatureAlignment) {
+                    case "left":
+                        signatureX = 40;
+                        signatureText = `—— ${postcardSignatureInput.value || "F1爱好者"}`;
+                        break;
+                    case "right":
+                        signatureX = postcardCanvas.width - 40;
+                        signatureText = `${postcardSignatureInput.value || "F1爱好者"} ——`;
+                        break;
+                    case "center":
+                    default:
+                        signatureX = postcardCanvas.width / 2;
+                        signatureText = `—— ${postcardSignatureInput.value || "F1爱好者"} ——`;
+                        break;
+                }
+                
+                ctx.font = '28px "HuiwenMingChao", "SimSun", serif';
+                ctx.fillText(signatureText, signatureX, postcardCanvas.height - 60);
+                
+                // 绘制底部文字
+                ctx.textAlign = 'center';
+                ctx.font = 'bold 36px "HuiwenMingChao", "SimSun", serif';
+                ctx.fillText('FORMULA 1', postcardCanvas.width / 2, postcardCanvas.height - 30);
+            };
+            
+            bgImage.onerror = function() {
+                ctx.fillStyle = '#0a0a12';
+                ctx.fillRect(0, 0, postcardCanvas.width, postcardCanvas.height);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 40px "HuiwenMingChao", "SimSun", serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('F1 2025赛季纪念', postcardCanvas.width / 2, 100);
+                
+                ctx.font = '24px "HuiwenMingChao", "SimSun", serif';
+                ctx.fillText('请将背景图片放入backgrounds文件夹中', postcardCanvas.width / 2, postcardCanvas.height / 2);
+            };
+        }
+        
+        // 生成明信片按钮
+        generatePostcardBtn.addEventListener('click', drawPostcard);
+        
+        // 更换背景按钮
+        changeBgBtn.addEventListener('click', function() {
+            currentPostcardBackground = getRandomPostcardBackground();
+            drawPostcard();
+        });
+        
+        // 保存明信片按钮
+        savePostcardBtn.addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.download = 'F1-2025赛季纪念明信片.png';
+            link.href = postcardCanvas.toDataURL('image/png');
+            link.click();
+        });
+        
+        // ============================================
+        // 字体预加载
+        // ============================================
+        function loadFontForCanvas() {
+            const font = new FontFace('HuiwenMingChao', 'url(HuiwenMingChao.otf)');
+            
+            font.load().then(function(loadedFont) {
+                document.fonts.add(loadedFont);
+            }).catch(function(error) {
+                console.log('字体加载失败:', error);
+            });
+        }
+        
+        // ============================================
+        // 初始化
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFontForCanvas();
+            initCoverLines();
+            updatePageIndicator();
+            generateRaceCards();
+            // 注意：这里删除了generateTitles()调用，因为我们已经删除了称号系统
+
+            // 初始化明信片
+            drawPostcard();
+            
+            // 按钮事件监听
+            prevBtn.addEventListener('click', goToPrevPage);
+            nextBtn.addEventListener('click', goToNextPage);
+            
+            // 点击滚动提示
+            scrollHint.addEventListener('click', goToNextPage);
+            
+            // 点击页面也可以前进
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-controls') && 
+                    !e.target.closest('.music-player') && 
+                    !e.target.closest('.postcard-controls') &&
+                    !e.target.closest('.postcard-buttons') &&
+                    !e.target.closest('.scroll-hint') &&
+                    !e.target.closest('.race-card') &&
+                    !e.target.closest('.alignment-btn') &&
+                    !e.target.closest('.media-item') &&
+                    !e.target.closest('.share-options') &&
+                    e.target.closest('.page-content') &&
+                    e.clientY > window.innerHeight * 0.8) {
+                    goToNextPage();
+                }
+                
+                // 点击页面任意位置尝试播放音乐
+                if (!musicPlayer.isPlaying && !musicPlayer.audio.src) {
+                    musicPlayer.playDefault();
+                }
+            });
+            
+            // 初始滚动到顶部
+            window.scrollTo(0, 0);
+        });
+        
+        // ============================================
+        // 全局函数
+        // ============================================
+        window.toggleMusic = function() {
+            musicPlayer.togglePlayPause();
+        };
+        
+        window.startMusic = function() {
+            musicPlayer.playDefault();
+        };
+        
+        window.stopMusic = function() {
+            musicPlayer.stop();
+        };
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
