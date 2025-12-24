@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>F1 2025赛季年终报告</title>
     <style>
         /* 汇文明朝体定义 */
@@ -1105,7 +1105,7 @@
             box-shadow: 0 8px 15px rgba(56, 56, 63, 0.3);
         }
         
-        /* 响应式设计 */
+        /* 响应式设计 - 主要修改手机端 */
         @media (max-width: 1200px) {
             .season-title { font-size: 4rem; }
             .season-subtitle { font-size: 1.8rem; }
@@ -1146,27 +1146,393 @@
             }
         }
         
+        /* 手机端优化 - 主要修改部分 */
         @media (max-width: 768px) {
-            .page-content { padding: 20px; }
-            .season-title { font-size: 2.8rem; letter-spacing: 3px; }
-            .season-subtitle { font-size: 1.5rem; }
-            .nav-controls { bottom: 20px; right: 20px; }
-            .nav-btn { width: 50px; height: 50px; }
-            .page-indicator { top: 20px; right: 20px; }
-            .music-player { left: 20px; bottom: 20px; min-width: auto; }
-            .music-player.collapsed { width: 60px; min-width: 60px; height: 60px; }
-            .music-player.collapsed .toggle-music-btn { width: 50px; height: 50px; }
-            .drivers-container { padding: 0 20px 20px; }
-            .driver-header { flex-direction: column; align-items: center; text-align: center; }
-            .driver-photo-container { width: 200px; height: 250px; margin-right: 0; margin-bottom: 20px; }
-            .driver-stats { grid-template-columns: repeat(2, 1fr); }
-            .race-header, .race-content { padding: 20px; }
-            .summary-stats { grid-template-columns: 1fr; }
-            .postcard-generator { padding: 30px 20px; grid-template-columns: 1fr; }
-            .summary-content { padding: 30px 20px; }
+            /* 全局调整 */
+            body {
+                font-size: 14px;
+            }
+            
+            .page-content { 
+                padding: 15px; 
+            }
+            
+            /* 封面页面调整 */
+            .season-title { 
+                font-size: 2.2rem !important; 
+                letter-spacing: 2px;
+                margin-bottom: 15px;
+            }
+            .season-subtitle { 
+                font-size: 1.3rem !important; 
+                margin-bottom: 25px;
+            }
+            .season-info { 
+                font-size: 1.1rem !important; 
+                margin-top: 20px;
+            }
+            
+            /* 导航按钮调整 */
+            .nav-controls { 
+                bottom: 15px; 
+                right: 15px; 
+                gap: 10px;
+            }
+            .nav-btn { 
+                width: 45px; 
+                height: 45px; 
+                font-size: 18px;
+            }
+            .page-indicator { 
+                top: 15px; 
+                right: 15px; 
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+            
+            /* 音乐播放器调整 */
+            .music-player { 
+                left: 15px; 
+                bottom: 15px; 
+                min-width: auto;
+                padding: 10px 15px;
+                width: calc(100% - 30px);
+                max-width: none;
+            }
+            .music-player.collapsed { 
+                width: 50px; 
+                min-width: 50px; 
+                height: 50px; 
+            }
+            .music-player.collapsed .toggle-music-btn { 
+                width: 40px; 
+                height: 40px; 
+            }
+            .music-controls {
+                gap: 5px;
+            }
+            .music-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            .volume-slider {
+                width: 70px;
+            }
+            
+            /* 车手介绍页面调整 */
+            .drivers-header {
+                padding: 20px 15px 15px;
+                margin-bottom: 15px;
+            }
+            .drivers-title {
+                font-size: 2.2rem;
+                margin-bottom: 5px;
+            }
+            .drivers-subtitle {
+                font-size: 1.2rem;
+            }
+            .drivers-container { 
+                padding: 0 15px 20px; 
+            }
+            .driver-card {
+                padding: 20px;
+                border-radius: 12px;
+            }
+            .driver-header { 
+                flex-direction: column; 
+                align-items: center; 
+                text-align: center; 
+                margin-bottom: 20px;
+            }
+            .driver-photo-container { 
+                width: 150px; 
+                height: 180px; 
+                margin-right: 0; 
+                margin-bottom: 15px; 
+            }
+            .driver-number {
+                font-size: 2.5rem;
+            }
+            .driver-name {
+                font-size: 1.8rem;
+            }
+            .driver-team {
+                font-size: 1.2rem;
+            }
+            .driver-nationality {
+                font-size: 1.1rem;
+            }
+            .driver-bio {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            .driver-stats { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 12px;
+            }
+            .stat-item {
+                padding: 12px;
+            }
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            /* 赛事概览页面调整 */
+            .races-container {
+                padding: 20px 15px;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            .race-card {
+                padding: 18px;
+            }
+            .race-card-name {
+                font-size: 1.5rem;
+            }
+            .race-card-location {
+                font-size: 1.1rem;
+            }
+            .race-card-date {
+                font-size: 1rem;
+            }
+            .race-card-driver-name {
+                font-size: 1.1rem;
+            }
+            .race-card-driver-position {
+                font-size: 1.2rem;
+            }
+            
+            /* 全屏赛事页面调整 */
+            .race-header, .race-content { 
+                padding: 15px; 
+            }
+            .race-name {
+                font-size: 2rem;
+            }
+            .race-location {
+                font-size: 1.5rem;
+            }
+            .race-date {
+                font-size: 1.2rem;
+            }
+            .close-race-btn {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+            .race-nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                padding: 0 10px;
+            }
+            .race-summary {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            .race-summary h3 {
+                font-size: 1.5rem;
+            }
+            
+            /* 媒体容器调整 */
             .media-container {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px;
+            }
+            .media-item {
+                min-height: 160px;
+            }
+            .video-wrapper,
+            .gif-wrapper,
+            .image-wrapper {
+                min-height: 160px;
+            }
+            
+            /* 总结页面调整 */
+            .summary-content { 
+                padding: 25px 15px; 
+                margin: 0 10px;
+                width: calc(100% - 20px);
+                border-radius: 15px;
+            }
+            .summary-title {
+                font-size: 2.2rem;
+                margin-bottom: 25px;
+                padding-bottom: 15px;
+            }
+            .summary-text {
+                font-size: 1.3rem;
+                line-height: 1.6;
+                margin-top: 20px;
+            }
+            .summary-stats { 
+                grid-template-columns: 1fr; 
+                gap: 20px;
+                margin-top: 30px;
+            }
+            .summary-stat {
+                padding: 20px;
+                border-radius: 12px;
+            }
+            .summary-stat h3 {
+                font-size: 1.8rem;
+            }
+            .summary-stat p {
+                font-size: 1.2rem;
+            }
+            
+            /* 成就抽卡调整 */
+            .achievements-title {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+            .lottery-container {
+                padding: 20px;
+            }
+            .lottery-display {
+                padding: 20px;
+                min-height: 300px;
+            }
+            .card-back {
+                width: 220px;
+                height: 300px;
+                font-size: 1.3rem;
+            }
+            .card-back i {
+                font-size: 3.5rem;
+                margin-bottom: 15px;
+            }
+            .lottery-button {
+                padding: 15px 25px;
+                font-size: 1.2rem;
+            }
+            
+            /* 成就卡片弹窗调整 */
+            .achievement-card {
+                padding: 20px;
+                max-height: 85vh;
+            }
+            .achievement-name {
+                font-size: 1.8rem;
+            }
+            .achievement-time,
+            .achievement-personnel {
+                font-size: 1.1rem;
+            }
+            .achievement-details {
+                font-size: 1.1rem;
+                padding: 12px;
+            }
+            .close-card-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                top: 10px;
+                right: 10px;
+            }
+            
+            /* 明信片生成器调整 */
+            .postcard-generator { 
+                padding: 25px 15px; 
+                grid-template-columns: 1fr;
+                margin-top: 40px;
+            }
+            .postcard-title {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            .postcard-canvas-container {
+                min-height: 350px;
+            }
+            #postcard-canvas {
+                max-height: 350px;
+            }
+            .postcard-control-group {
+                gap: 8px;
+            }
+            .postcard-label {
+                font-size: 1.1rem;
+            }
+            .postcard-input {
+                padding: 12px 15px;
+                font-size: 1.1rem;
+            }
+            .alignment-btn {
+                padding: 8px;
+                font-size: 1rem;
+            }
+            .postcard-buttons {
                 gap: 15px;
+                margin-top: 20px;
+            }
+            .postcard-btn {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+            
+            /* 交互按钮调整 */
+            .interactive-btn {
+                padding: 12px 20px;
+                font-size: 1.1rem;
+                margin: 30px auto 0;
+            }
+            
+            /* 滚动提示 */
+            .scroll-hint {
+                bottom: 20px;
+                font-size: 2rem;
+            }
+        }
+        
+        /* 小屏幕手机进一步优化 */
+        @media (max-width: 480px) {
+            .season-title { 
+                font-size: 1.8rem !important; 
+            }
+            .season-subtitle { 
+                font-size: 1.1rem !important; 
+            }
+            .drivers-title {
+                font-size: 1.8rem;
+            }
+            .driver-name {
+                font-size: 1.6rem;
+            }
+            .races-container {
+                grid-template-columns: 1fr;
+            }
+            .summary-title {
+                font-size: 1.8rem;
+            }
+            .postcard-canvas-container {
+                min-height: 300px;
+            }
+            #postcard-canvas {
+                max-height: 300px;
+            }
+            .media-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 超小屏幕手机 */
+        @media (max-width: 360px) {
+            .season-title { 
+                font-size: 1.6rem !important; 
+            }
+            .driver-photo-container { 
+                width: 130px; 
+                height: 160px; 
+            }
+            .postcard-canvas-container {
+                min-height: 250px;
+            }
+            #postcard-canvas {
+                max-height: 250px;
             }
         }
         
@@ -1546,53 +1912,6 @@
             align-items: center;
         }
         
-        .achievement-card {
-            background: linear-gradient(135deg, #1a1a2e, #0a0a12);
-            border-radius: 25px;
-            width: 90%;
-            max-width: 800px;
-            min-height: 500px;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 5px solid #ffcc00;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-            position: relative;
-            animation: cardAppear 0.6s ease-out;
-        }
-        
-        @keyframes cardAppear {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .close-card-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #e10600;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-            transition: all 0.3s;
-        }
-        
-        .close-card-btn:hover {
-            background-color: #ff1a1a;
-            transform: scale(1.1);
-        }
-        
-        /* 修改成就卡片容器 */
         .achievement-card {
             background: linear-gradient(135deg, #1a1a2e, #0a0a12);
             border-radius: 25px;
